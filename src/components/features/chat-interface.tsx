@@ -75,10 +75,29 @@ export default function ChatInterface() {
     formData.append('prompt', input);
     formData.append('chatHistory', JSON.stringify([...messages, userMessage].map(({ audioData, ...rest }) => rest)));
 
-    formAction(formData);
-
+    (e.target as HTMLFormElement).action = () => formAction(formData);
+    
     setInput('');
   };
+
+  const handleFormAction = (formData: FormData) => {
+      if (!input.trim() || isPending) return;
+
+        const userMessage: Message = {
+            id: Date.now(),
+            text: input,
+            sender: 'user',
+        };
+
+        setMessages((prev) => [...prev, userMessage]);
+        
+        formData.set('prompt', input);
+        formData.set('chatHistory', JSON.stringify([...messages, userMessage].map(({ audioData, ...rest }) => rest)));
+
+        formAction(formData);
+
+        setInput('');
+  }
 
   const toggleAudio = (message: Message) => {
     if (playingAudioId === message.id) {
@@ -162,13 +181,14 @@ export default function ChatInterface() {
         </div>
       </ScrollArea>
       <div className="border-t bg-background p-4">
-        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+        <form action={handleFormAction} className="flex items-center gap-2">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question about your textbook..."
             className="flex-1"
             autoComplete="off"
+            name="prompt"
             disabled={isPending}
           />
           <Button type="submit" size="icon" disabled={!input.trim() || isPending}>
