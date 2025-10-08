@@ -6,7 +6,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const pageTitles: { [key: string]: string } = {
   '/': 'Dashboard',
-  '/study-plan': 'Intelligent Study Plan Generator',
+  '/study-plan': 'Study Plan Generator',
   '/quizzes': 'Quiz & Test Generation',
   '/topics': 'Past Paper Topic Extraction',
   '/augment': 'Augmented Learning Materials',

@@ -43,9 +43,9 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <Card className="overflow-hidden">
-        <div className="flex flex-col justify-center p-8 lg:p-12">
+        <div className="flex flex-col justify-center p-6 md:p-8 lg:p-12">
           <h1 className="font-headline text-3xl font-bold md:text-4xl lg:text-5xl">Welcome to EduMind AI</h1>
-          <p className="mt-4 text-muted-foreground md:text-lg">
+          <p className="mt-4 text-base text-muted-foreground md:text-lg">
             Your intelligent, adaptive learning companion. Upload your textbook and let our AI transform your study sessions.
           </p>
           <div className="mt-6">
@@ -75,7 +75,7 @@ export default function DashboardPage() {
 
       <div className="space-y-4">
         <h2 className="font-headline text-2xl font-bold">Explore Features</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featureCards.map((feature) => (
             <Card key={feature.href} className="flex flex-col overflow-hidden transition-all hover:shadow-lg">
               <CardHeader>

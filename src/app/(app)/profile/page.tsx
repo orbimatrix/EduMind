@@ -22,36 +22,36 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-3">
-        <div className="md:col-span-1 space-y-4">
+      <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="lg:col-span-1 space-y-6">
             <Card>
-                <CardHeader className="flex flex-row items-center gap-4">
-                <Avatar className="h-16 w-16">
+                <CardHeader className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+                <Avatar className="h-20 w-20">
                     {userAvatar && <AvatarImage src={userAvatar.imageUrl} alt="User Avatar" data-ai-hint={userAvatar.imageHint} />}
                     <AvatarFallback>
-                    <User className="h-8 w-8" />
+                    <User className="h-10 w-10" />
                     </AvatarFallback>
                 </Avatar>
-                <div>
-                    <CardTitle className="font-headline text-xl">Guest User</CardTitle>
+                <div className="flex-1">
+                    <CardTitle className="font-headline text-2xl">Guest User</CardTitle>
                     <CardDescription>guest@edumind.ai</CardDescription>
                 </div>
                 </CardHeader>
                 <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-6">
                     <div>
-                    <div className="flex justify-between items-center mb-1">
+                    <div className="flex justify-between items-center mb-2">
                         <span className="text-sm font-medium text-muted-foreground">Study Progress</span>
                         <span className="text-sm font-bold">42%</span>
                     </div>
                     <Progress value={42} />
                     </div>
                     <div>
-                    <h4 className="text-sm font-medium text-muted-foreground mb-2">My Subjects</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground mb-3">My Subjects</h4>
                     <div className="flex flex-wrap gap-2">
-                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-2 rounded-full">Physics</span>
-                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-2 rounded-full">Mathematics</span>
-                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-2 rounded-full">Chemistry</span>
+                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Physics</span>
+                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Mathematics</span>
+                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Chemistry</span>
                     </div>
                     </div>
                 </div>
@@ -59,12 +59,12 @@ export default function ProfilePage() {
             </Card>
         </div>
 
-        <div className="md:col-span-2">
+        <div className="lg:col-span-2">
              <Card>
                 <CardHeader>
                     <CardTitle className="font-headline">Edit Profile</CardTitle>
                     <CardDescription>
-                        Update your personal details here.
+                        Update your personal details here. Changes will be saved across the platform.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

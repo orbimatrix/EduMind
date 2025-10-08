@@ -58,8 +58,8 @@ export default function QuizGenerator() {
 
   return (
     <div className="space-y-6">
-      <form action={formAction} className="space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <form action={formAction} className="space-y-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="topic">Chapter or Topic</Label>
             <Input id="topic" placeholder="e.g., Work, Power, Energy" {...register('topic')} />
@@ -76,7 +76,7 @@ export default function QuizGenerator() {
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="numQuestions">Number of Questions: <Badge variant="secondary">{numQuestions}</Badge></Label>
           <Slider
             id="numQuestions"

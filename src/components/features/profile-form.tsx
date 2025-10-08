@@ -64,8 +64,8 @@ export default function ProfileForm() {
   }, [state, toast]);
 
   return (
-    <form action={formAction} className="space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <form action={formAction} className="space-y-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" {...register('name')} />
@@ -86,7 +86,8 @@ export default function ProfileForm() {
             <Textarea 
                 id="subjects"
                 placeholder="e.g., Physics, Mathematics, History"
-                {...register('subjects')} 
+                {...register('subjects')}
+                className="min-h-24"
             />
             <p className="text-xs text-muted-foreground">
                 Enter your subjects separated by commas.
