@@ -23,9 +23,6 @@ export default function TeacherDashboardPage() {
             Manage your classroom, track student progress, and create assessments.
           </p>
         </div>
-        <Button asChild>
-            <Link href="/dashboard">Student View</Link>
-        </Button>
       </div>
       
       <div className="space-y-4">
