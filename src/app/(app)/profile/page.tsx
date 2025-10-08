@@ -1,10 +1,20 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { User } from 'lucide-react';
+import { Award, BookCopy, Check, Medal, ShieldCheck, Sparkles, Star, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Progress } from '@/components/ui/progress';
 import ProfileForm from '@/components/features/profile-form';
+
+const badges = [
+    { icon: Star, title: "First Upload", description: "Uploaded your first document.", earned: true },
+    { icon: BookCopy, title: "Bookworm", description: "Uploaded 5 documents.", earned: true },
+    { icon: ShieldCheck, title: "Verified Contributor", description: "Submitted a high-quality document.", earned: true },
+    { icon: Medal, title: "Topic Master", description: "Contributed 3 documents on a single topic.", earned: false },
+    { icon: Award, title: "Scholar", description: "Reached Level 5.", earned: true },
+    { icon: Sparkles, title: "AI Enthusiast", description: "Used all AI features.", earned: false },
+];
+
 
 export default function ProfilePage() {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
@@ -17,7 +27,7 @@ export default function ProfilePage() {
         <div>
           <h1 className="font-headline text-3xl font-bold">My Profile</h1>
           <p className="mt-1 text-muted-foreground">
-            View and manage your profile information.
+            View and manage your profile, progress, and achievements.
           </p>
         </div>
       </div>
@@ -38,23 +48,45 @@ export default function ProfilePage() {
                 </div>
                 </CardHeader>
                 <CardContent>
-                <div className="space-y-6">
-                    <div>
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm font-medium text-muted-foreground">Study Progress</span>
-                        <span className="text-sm font-bold">42%</span>
+                    <div className="space-y-4">
+                        <div>
+                            <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm font-medium text-muted-foreground">Level 5 - Scholar</span>
+                                <span className="text-sm font-bold">1250 / 2000 XP</span>
+                            </div>
+                            <Progress value={62.5} />
+                        </div>
+                        <div>
+                            <h4 className="text-sm font-medium text-muted-foreground mb-3">My Subjects</h4>
+                            <div className="flex flex-wrap gap-2">
+                                <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Physics</span>
+                                <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Mathematics</span>
+                                <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Chemistry</span>
+                            </div>
+                        </div>
                     </div>
-                    <Progress value={42} />
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle className="font-headline">My Achievements</CardTitle>
+                     <CardDescription>Badges earned from your contributions.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                     <div className="grid grid-cols-2 gap-4">
+                        {badges.map((badge) => (
+                            <div key={badge.title} className={`flex flex-col items-center justify-center gap-2 rounded-lg p-4 text-center ${badge.earned ? 'bg-accent/50' : 'bg-muted/50 opacity-50'}`}>
+                                <div className={`flex h-12 w-12 items-center justify-center rounded-full ${badge.earned ? 'bg-primary/10 text-primary' : 'bg-muted-foreground/10 text-muted-foreground'}`}>
+                                    <badge.icon className="h-6 w-6" />
+                                </div>
+                                <div className="space-y-1">
+                                    <h5 className="text-sm font-semibold">{badge.title}</h5>
+                                    <p className="text-xs text-muted-foreground">{badge.description}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    <div>
-                    <h4 className="text-sm font-medium text-muted-foreground mb-3">My Subjects</h4>
-                    <div className="flex flex-wrap gap-2">
-                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Physics</span>
-                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Mathematics</span>
-                        <span className="text-xs bg-secondary text-secondary-foreground py-1 px-3 rounded-full">Chemistry</span>
-                    </div>
-                    </div>
-                </div>
                 </CardContent>
             </Card>
         </div>
@@ -76,3 +108,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+
