@@ -9,7 +9,6 @@ import { augmentLearningMaterialsWithWebResearch } from '@/ai/flows/augment-lear
 import type { GenerateExamRelevantQuizzesOutput } from '@/ai/flows/generate-exam-relevant-quizzes';
 import {
   generateChapterSummary,
-  GenerateChapterSummaryInputSchema,
   type GenerateChapterSummaryOutput,
 } from '@/ai/flows/generate-chapter-summary';
 
@@ -35,6 +34,14 @@ const keyTopicsSchema = z.object({
 const augmentSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
 });
+
+export const GenerateChapterSummaryInputSchema = z.object({
+  chapterContent: z
+    .string().min(1, 'Chapter content is required.'),
+  documentType: z
+    .enum(['Novel', 'Textbook', 'Research Paper', 'Scientific Journal']),
+});
+
 
 // Types for server action state
 type StudyPlanState = {
@@ -63,7 +70,7 @@ type AugmentState = {
 
 type ChapterSummaryState = {
   message: string;
-  errors?: z.ZodIssue[];
+  errors?: { chapterContent?: string[], documentType?: string[] };
   data?: GenerateChapterSummaryOutput;
 }
 
@@ -151,7 +158,7 @@ export async function createChapterSummary(prevState: ChapterSummaryState, formD
   if (!validatedFields.success) {
     return {
       message: 'Invalid form data.',
-      errors: validatedFields.error.issues,
+      errors: validatedFields.error.flatten().fieldErrors,
     };
   }
 

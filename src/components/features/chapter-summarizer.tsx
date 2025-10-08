@@ -2,10 +2,10 @@
 'use client';
 
 import { useActionState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { createChapterSummary } from '@/lib/actions';
+import { createChapterSummary, GenerateChapterSummaryInputSchema } from '@/lib/actions';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { FormSubmitButton } from '@/components/features/form-submit-button';
@@ -14,7 +14,6 @@ import { useToast } from '@/hooks/use-toast';
 import { CheckCircle2, FlaskConical, Key, Pilcrow } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '../ui/badge';
-import { GenerateChapterSummaryInputSchema } from '@/ai/flows/generate-chapter-summary';
 
 type FormData = z.infer<typeof GenerateChapterSummaryInputSchema>;
 
@@ -24,11 +23,12 @@ export default function ChapterSummarizer() {
 
   const {
     register,
-    setValue,
+    control,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(GenerateChapterSummaryInputSchema),
     defaultValues: {
+      chapterContent: "",
       documentType: 'Textbook',
     },
   });
@@ -154,15 +154,3 @@ export default function ChapterSummarizer() {
     </div>
   );
 }
-
-// Minimal Controller component for use with react-hook-form and shadcn-ui
-const Controller = ({ name, control, render }: any) => {
-  const { setValue } = useForm();
-  return render({
-    field: {
-      name,
-      onChange: (value: any) => setValue(name, value),
-      value: control.defaultValuesRef.current[name]
-    }
-  });
-};

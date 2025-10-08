@@ -3,14 +3,14 @@
  * @fileOverview Generates a structured summary of a chapter from various document types.
  *
  * - generateChapterSummary - A function that handles chapter summarization.
- * - GenerateChapterSummaryInput - The input type for the generateChapterSummary function.
+ * - GenerateChapterSummaryInput - The input type for the generateChaptersummary function.
  * - GenerateChapterSummaryOutput - The return type for the generateChapterSummary function.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-export const GenerateChapterSummaryInputSchema = z.object({
+const GenerateChapterSummaryInputSchema = z.object({
   chapterContent: z
     .string()
     .describe('The full text content of the chapter to be summarized.'),
@@ -22,7 +22,7 @@ export type GenerateChapterSummaryInput = z.infer<
   typeof GenerateChapterSummaryInputSchema
 >;
 
-export const GenerateChapterSummaryOutputSchema = z.object({
+const GenerateChapterSummaryOutputSchema = z.object({
   bulletPoints: z
     .array(z.string())
     .describe('5-7 concise bullet points capturing the main ideas of the chapter.'),
