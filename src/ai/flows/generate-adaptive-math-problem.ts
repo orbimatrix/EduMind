@@ -66,6 +66,60 @@ export async function generateAdaptiveMathProblem(
   return generateAdaptiveMathProblemFlow(input);
 }
 
+const fallbackProblems: Record<
+  'fractions_decimals' | 'algebra' | 'geometry',
+  GenerateAdaptiveMathProblemOutput[]
+> = {
+  fractions_decimals: [
+    {
+      problemStatement: "What is 3/4 as a decimal?",
+      problemType: "decimal_conversion",
+      expectedAnswer: "0.75",
+      hint: "To convert a fraction to a decimal, divide the numerator by the denominator.",
+      commonMistake: "A common mistake is dividing the denominator by the numerator.",
+    },
+    {
+      problemStatement: "Calculate 1/2 + 1/3.",
+      problemType: "fraction_operations",
+      expectedAnswer: "5/6",
+      hint: "To add fractions, you need to find a common denominator.",
+      commonMistake: "Adding the numerators and denominators separately (1+1)/(2+3) is incorrect.",
+    },
+  ],
+  algebra: [
+    {
+      problemStatement: "If 2x + 4 = 10, what is the value of x?",
+      problemType: "basic_equations",
+      expectedAnswer: "3",
+      hint: "First, subtract 4 from both sides of the equation to isolate the term with x.",
+      commonMistake: "Forgetting to perform the same operation on both sides of the equation.",
+    },
+    {
+      problemStatement: "Solve for y: 5y - 7 = 13.",
+      problemType: "equation_solving",
+      expectedAnswer: "4",
+      hint: "Start by adding 7 to both sides of the equation.",
+      commonMistake: "Incorrectly combining terms or making sign errors during transposition.",
+    },
+  ],
+  geometry: [
+    {
+      problemStatement: "A rectangle has a length of 12 units and a width of 5 units. What is its area?",
+      problemType: "geometry_area",
+      expectedAnswer: "60",
+      hint: "The area of a rectangle is calculated by multiplying its length by its width.",
+      commonMistake: "A common mistake is adding the length and width instead of multiplying them.",
+    },
+    {
+      problemStatement: "If a point (3, 4) is reflected across the x-axis, what are its new coordinates?",
+      problemType: "transformations",
+      expectedAnswer: "(3, -4)",
+      hint: "When reflecting across the x-axis, the x-coordinate stays the same, and the y-coordinate changes its sign.",
+      commonMistake: "Confusing reflection across the x-axis with reflection across the y-axis (which would be -3, 4).",
+    },
+  ],
+};
+
 const prompt = ai.definePrompt({
   name: 'generateAdaptiveMathProblemPrompt',
   input: { schema: GenerateAdaptiveMathProblemInputSchema },
@@ -118,14 +172,10 @@ const generateAdaptiveMathProblemFlow = ai.defineFlow(
         return output!;
     } catch (error) {
         console.error("AI problem generation failed, returning fallback.", error);
-        // Fallback to a pre-existing problem if AI fails
-        const fallbackProblem: GenerateAdaptiveMathProblemOutput = {
-            problemStatement: "A rectangle has a length of 12 units and a width of 5 units. What is its area?",
-            problemType: "geometry_area",
-            expectedAnswer: "60",
-            hint: "The area of a rectangle is calculated by multiplying its length by its width.",
-            commonMistake: "A common mistake is adding the length and width instead of multiplying them."
-        };
+        
+        const problems = fallbackProblems[input.skill] || fallbackProblems.geometry;
+        const fallbackProblem = problems[Math.floor(Math.random() * problems.length)];
+        
         return fallbackProblem;
     }
   }
