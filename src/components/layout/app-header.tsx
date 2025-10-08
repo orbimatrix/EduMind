@@ -14,6 +14,7 @@ const pageTitles: { [key: string]: string } = {
   '/topics': 'Past Paper Topic Extraction',
   '/augment': 'Augmented Learning Materials',
   '/chat': 'Interactive Chat Support',
+  '/knowledge-graph': 'Knowledge Graph',
   '/profile': 'My Profile',
 };
 
