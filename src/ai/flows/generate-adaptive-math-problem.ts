@@ -113,7 +113,20 @@ const generateAdaptiveMathProblemFlow = ai.defineFlow(
     outputSchema: GenerateAdaptiveMathProblemOutputSchema,
   },
   async (input) => {
-    const { output } = await prompt(input);
-    return output!;
+    try {
+        const { output } = await prompt(input);
+        return output!;
+    } catch (error) {
+        console.error("AI problem generation failed, returning fallback.", error);
+        // Fallback to a pre-existing problem if AI fails
+        const fallbackProblem: GenerateAdaptiveMathProblemOutput = {
+            problemStatement: "A rectangle has a length of 12 units and a width of 5 units. What is its area?",
+            problemType: "geometry_area",
+            expectedAnswer: "60",
+            hint: "The area of a rectangle is calculated by multiplying its length by its width.",
+            commonMistake: "A common mistake is adding the length and width instead of multiplying them."
+        };
+        return fallbackProblem;
+    }
   }
 );

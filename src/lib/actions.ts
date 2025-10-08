@@ -395,6 +395,9 @@ export async function createAdaptiveMathProblem(prevState: AdaptiveMathState, fo
     const result = await generateAdaptiveMathProblem(validatedFields.data);
     return { message: 'success', data: result };
   } catch (error) {
+    // The flow now handles its own errors and returns a fallback,
+    // so this catch block might not be strictly necessary unless the action itself fails.
+    // However, to be safe, we can still return an error message.
     console.error(error);
     return { message: 'An error occurred while generating the math problem. Please try again.' };
   }
