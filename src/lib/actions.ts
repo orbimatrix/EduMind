@@ -11,6 +11,10 @@ import {
   generateChapterSummary,
   type GenerateChapterSummaryOutput,
 } from '@/ai/flows/generate-chapter-summary';
+import {
+  generateFlashcards,
+  type GenerateFlashcardsOutput,
+} from '@/ai/flows/generate-flashcards';
 
 // Schemas for form validation
 const studyPlanSchema = z.object({
@@ -35,11 +39,8 @@ const augmentSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
 });
 
-const GenerateChapterSummaryInputSchema = z.object({
-  chapterContent: z
-    .string().min(1, 'Chapter content is required.'),
-  documentType: z
-    .enum(['Novel', 'Textbook', 'Research Paper', 'Scientific Journal']),
+const flashcardSchema = z.object({
+  sourceContent: z.string().min(50, 'Content must be at least 50 characters long.'),
 });
 
 
@@ -72,6 +73,12 @@ type ChapterSummaryState = {
   message: string;
   errors?: { chapterContent?: string[], documentType?: string[] };
   data?: GenerateChapterSummaryOutput;
+}
+
+type FlashcardState = {
+  message: string;
+  errors?: { sourceContent?: string[] };
+  data?: GenerateFlashcardsOutput;
 }
 
 // Server Actions
@@ -153,6 +160,13 @@ export async function createAugmentedContent(prevState: AugmentState, formData: 
 }
 
 export async function createChapterSummary(prevState: ChapterSummaryState, formData: FormData): Promise<ChapterSummaryState> {
+  const GenerateChapterSummaryInputSchema = z.object({
+    chapterContent: z
+      .string().min(1, 'Chapter content is required.'),
+    documentType: z
+      .enum(['Novel', 'Textbook', 'Research Paper', 'Scientific Journal']),
+  });
+
   const validatedFields = GenerateChapterSummaryInputSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validatedFields.success) {
@@ -168,5 +182,24 @@ export async function createChapterSummary(prevState: ChapterSummaryState, formD
   } catch (error) {
     console.error(error);
     return { message: 'An error occurred while generating the summary. Please try again.' };
+  }
+}
+
+export async function createFlashcards(prevState: FlashcardState, formData: FormData): Promise<FlashcardState> {
+  const validatedFields = flashcardSchema.safeParse(Object.fromEntries(formData.entries()));
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid form data.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const result = await generateFlashcards(validatedFields.data);
+    return { message: 'success', data: result };
+  } catch (error) {
+    console.error(error);
+    return { message: 'An error occurred while generating flashcards. Please try again.' };
   }
 }

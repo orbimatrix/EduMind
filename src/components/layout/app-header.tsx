@@ -12,6 +12,7 @@ const pageTitles: { [key: string]: string } = {
   '/study-plan': 'Study Plan Generator',
   '/quizzes': 'Quiz & Test Generation',
   '/summarizer': 'Chapter Summarizer',
+  '/flashcards': 'Flashcard Generator',
   '/topics': 'Past Paper Topic Extraction',
   '/augment': 'Augmented Learning Materials',
   '/chat': 'Interactive Chat Support',

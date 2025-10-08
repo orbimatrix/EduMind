@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -21,6 +21,7 @@ const menuItems = [
   { href: '/study-plan', label: 'Study Plan', icon: ListTodo },
   { href: '/quizzes', label: 'Quizzes', icon: MessageSquareQuote },
   { href: '/summarizer', label: 'Summarizer', icon: BookText },
+  { href: '/flashcards', label: 'Flashcards', icon: Layers },
   { href: '/chat', label: 'Chat', icon: MessagesSquare },
   { href: '/topics', label: 'Key Topics', icon: Search },
   { href: '/augment', label: 'Augment', icon: BrainCircuit },
