@@ -1,4 +1,6 @@
 
+'use client';
+
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,10 +22,13 @@ import {
   Github,
   Linkedin,
   Disc,
+  Menu,
 } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Separator } from '@/components/ui/separator';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import React from 'react';
 
 const featureCards = [
   {
@@ -124,12 +129,13 @@ const techStack = [
 
 export default function LandingPage() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero');
+  const [isMenuOpen, setMenuOpen] = React.useState(false);
 
   return (
     <div className="bg-background text-foreground">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6 lg:px-8">
+        <div className="container mx-auto flex h-16 items-center justify-between px-0">
           <Link href="/" className="flex items-center gap-2">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-headline text-xl font-bold">EduMind AI</span>
@@ -137,9 +143,9 @@ export default function LandingPage() {
           <nav className="hidden items-center gap-4 md:flex">
              <Link href="#features" className={buttonVariants({ variant: 'ghost' })}>Features</Link>
              <Link href="#how-it-works" className={buttonVariants({ variant: 'ghost' })}>How It Works</Link>
-             <Link href="#pricing" className={buttonVariants({ variant: 'ghost' })}>Pricing</Link>
+             <Link href="#use-cases" className={buttonVariants({ variant: 'ghost' })}>Use Cases</Link>
           </nav>
-          <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-2 md:flex">
             <Button variant="outline" asChild>
               <Link href="/login">Log In</Link>
             </Button>
@@ -147,12 +153,44 @@ export default function LandingPage() {
               <Link href="/dashboard">Get Started <ArrowRight className="ml-2" /></Link>
             </Button>
           </div>
+          <div className="md:hidden">
+            <Sheet open={isMenuOpen} onOpenChange={setMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu />
+                  <span className="sr-only">Open Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full max-w-xs">
+                <div className="flex h-full flex-col p-6">
+                    <Link href="/" className="mb-8 flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+                        <GraduationCap className="h-7 w-7 text-primary" />
+                        <span className="font-headline text-xl font-bold">EduMind AI</span>
+                    </Link>
+                    <nav className="flex flex-col gap-4 text-lg">
+                        <Link href="#features" onClick={() => setMenuOpen(false)} className="py-2">Features</Link>
+                        <Link href="#how-it-works" onClick={() => setMenuOpen(false)} className="py-2">How It Works</Link>
+                        <Link href="#use-cases" onClick={() => setMenuOpen(false)} className="py-2">Use Cases</Link>
+                    </nav>
+                    <Separator className="my-6" />
+                    <div className="flex flex-col gap-4">
+                        <Button variant="outline" asChild>
+                          <Link href="/login">Log In</Link>
+                        </Button>
+                        <Button asChild>
+                          <Link href="/dashboard">Get Started</Link>
+                        </Button>
+                    </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </header>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32">
+        <section className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
             <div
                 aria-hidden="true"
                 className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
@@ -160,7 +198,7 @@ export default function LandingPage() {
                 <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-green-300 dark:from-blue-700"></div>
                 <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
             </div>
-            <div className="container relative text-center">
+            <div className="container relative mx-auto text-center">
                 <Badge variant="secondary" className="mb-4">Your AI-Powered Study Companion</Badge>
                 <h1 className="font-headline text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
                     Study Smarter with EduMind 🧠
@@ -168,14 +206,14 @@ export default function LandingPage() {
                 <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
                     Upload any book and let AI turn it into a personalized tutor, quiz generator, and study planner.
                 </p>
-                <div className="mt-8 flex justify-center gap-4">
+                <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                     <Button size="lg" asChild>
                         <Link href="/dashboard">
                             Get Started <ArrowRight className="ml-2" />
                         </Link>
                     </Button>
                     <Button size="lg" variant="outline" asChild>
-                        <Link href="#features">Watch Demo</Link>
+                        <Link href="#features">Learn More</Link>
                     </Button>
                 </div>
                 <div className="relative mt-12 md:mt-16 mx-auto max-w-4xl">
@@ -198,8 +236,8 @@ export default function LandingPage() {
 
 
         {/* Key Features Section */}
-        <section id="features" className="py-20 md:py-28 bg-muted/30">
-          <div className="container">
+        <section id="features" className="py-20 md:py-28 bg-muted/30 px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold sm:text-4xl">Core Functionalities</h2>
               <p className="mt-4 text-lg text-muted-foreground">
@@ -225,8 +263,8 @@ export default function LandingPage() {
         </section>
         
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 md:py-28">
-            <div className="container">
+        <section id="how-it-works" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold sm:text-4xl">A Simple 3-Step Flow</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
@@ -254,8 +292,8 @@ export default function LandingPage() {
 
 
         {/* Smart Features Section */}
-        <section id="smart-features" className="py-20 md:py-28 bg-muted/30">
-            <div className="container">
+        <section id="smart-features" className="py-20 md:py-28 bg-muted/30 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold sm:text-4xl">AI in Action: A Deeper Look</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
@@ -289,8 +327,8 @@ export default function LandingPage() {
 
 
         {/* Use Cases Section */}
-        <section id="use-cases" className="py-20 md:py-28">
-            <div className="container">
+        <section id="use-cases" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold sm:text-4xl">Who Is It For?</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
@@ -317,8 +355,8 @@ export default function LandingPage() {
 
 
         {/* Tech Stack Section */}
-        <section id="tech-stack" className="py-20 md:py-28 bg-muted/30">
-            <div className="container text-center">
+        <section id="tech-stack" className="py-20 md:py-28 bg-muted/30 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto text-center">
                 <h2 className="font-headline text-3xl font-bold sm:text-4xl">Powered by Cutting-Edge Technology</h2>
                 <p className="mt-4 text-lg text-muted-foreground">
                     We use the best tools to deliver a seamless and intelligent learning experience.
@@ -336,15 +374,15 @@ export default function LandingPage() {
 
 
         {/* CTA Section */}
-        <section id="cta" className="py-20 md:py-28">
-            <div className="container text-center">
+        <section id="cta" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto text-center">
                 <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
                     Ready to Study Smarter?
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
                     Join EduMind today and experience an AI that learns your syllabus.
                 </p>
-                <div className="mt-8 flex justify-center gap-4">
+                <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                      <Button size="lg" asChild>
                         <Link href="/dashboard">Try Demo</Link>
                     </Button>
@@ -358,7 +396,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t">
-        <div className="container py-8">
+        <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col-reverse items-center justify-between gap-4 md:flex-row">
                  <p className="text-center text-sm text-muted-foreground">
                     © {new Date().getFullYear()} EduMind. Built with ❤️ by Studio.
