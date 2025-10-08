@@ -3,9 +3,12 @@
 
 import { usePathname } from 'next/navigation';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { GraduationCap } from 'lucide-react';
 
 const pageTitles: { [key: string]: string } = {
-  '/': 'Dashboard',
+  '/dashboard': 'Dashboard',
   '/study-plan': 'Study Plan Generator',
   '/quizzes': 'Quiz & Test Generation',
   '/topics': 'Past Paper Topic Extraction',
@@ -20,10 +23,25 @@ export default function AppHeader() {
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
-      <div className="md:hidden">
-        <SidebarTrigger />
+       <div className="flex items-center gap-2">
+        <div className="md:hidden">
+            <SidebarTrigger />
+        </div>
+        <Link href="/dashboard" className="flex items-center gap-2 md:hidden">
+            <GraduationCap className="h-6 w-6 text-primary" />
+            <span className="font-headline text-xl font-semibold text-primary">EduMind</span>
+        </Link>
       </div>
-      <h1 className="font-headline text-xl font-semibold md:text-2xl">{title}</h1>
+
+      <div className="hidden md:block">
+        <h1 className="font-headline text-xl font-semibold md:text-2xl">{title}</h1>
+      </div>
+
+      <div className="ml-auto">
+        <Button asChild>
+            <Link href="/">Home</Link>
+        </Button>
+      </div>
     </header>
   );
 }

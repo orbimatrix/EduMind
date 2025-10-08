@@ -17,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const menuItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/study-plan', label: 'Study Plan', icon: ListTodo },
   { href: '/quizzes', label: 'Quizzes', icon: MessageSquareQuote },
   { href: '/chat', label: 'Chat', icon: MessagesSquare },
@@ -33,7 +33,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/dashboard" className="flex items-center gap-2">
           <GraduationCap className="h-8 w-8 text-primary" />
           <h1 className="font-headline text-2xl font-semibold text-primary">EduMind AI</h1>
         </Link>
