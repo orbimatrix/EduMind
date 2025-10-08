@@ -24,7 +24,7 @@ export default function TeacherDashboardPage() {
           </p>
         </div>
         <Button asChild>
-            <Link href="/">Student View</Link>
+            <Link href="/dashboard">Student View</Link>
         </Button>
       </div>
 
