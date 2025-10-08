@@ -70,21 +70,23 @@ export default function AdaptiveMathTutor() {
   }, [state, toast, resetField, isStarted]);
 
   const handleStartPractice = (formData: FormData) => {
-    formData.set('skill', skill);
-    formData.set('difficulty', String(difficulty));
-    formData.set('studentAbility', String(studentAbility));
-    formData.set('solveHistory', JSON.stringify(solveHistory));
-    formAction(formData);
+    const data = new FormData();
+    data.append('skill', skill);
+    data.append('difficulty', String(difficulty));
+    data.append('studentAbility', String(studentAbility));
+    data.append('solveHistory', JSON.stringify(solveHistory));
+    formAction(data);
   };
   
-  const fetchNewProblem = () => {
-    const formData = new FormData();
-    formData.append('skill', skill);
-    formData.append('difficulty', String(difficulty));
-    formData.append('studentAbility', String(studentAbility));
-    formData.append('solveHistory', JSON.stringify(solveHistory));
-    formAction(formData);
-  };
+  const handleNextProblem = (formData: FormData) => {
+    setProblem(null);
+    const data = new FormData();
+    data.append('skill', skill);
+    data.append('difficulty', String(difficulty));
+    data.append('studentAbility', String(studentAbility));
+    data.append('solveHistory', JSON.stringify(solveHistory));
+    formAction(data);
+  }
 
   const onAnswerSubmit = (data: FormData) => {
     if (!problem) return;
@@ -121,10 +123,6 @@ export default function AdaptiveMathTutor() {
     setIsSubmitting(false);
   };
   
-  const handleNextProblem = () => {
-      setProblem(null);
-      fetchNewProblem();
-  }
 
   if (!isStarted) {
     return (
@@ -199,9 +197,11 @@ export default function AdaptiveMathTutor() {
                                             <p className="text-sm text-muted-foreground">{feedback.explanation}</p>
                                         </div>
                                     </div>
-                                    <Button onClick={handleNextProblem} className="w-full">
-                                        Next Problem
-                                    </Button>
+                                    <form action={handleNextProblem} className="w-full">
+                                        <FormSubmitButton className="w-full">
+                                            Next Problem
+                                        </FormSubmitButton>
+                                    </form>
                                 </CardContent>
                              </Card>
                         )}
@@ -216,3 +216,5 @@ export default function AdaptiveMathTutor() {
     </div>
   );
 }
+
+    
