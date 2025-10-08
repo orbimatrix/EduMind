@@ -1,8 +1,7 @@
 
 'use client';
 
-import { useFormState } from 'react-dom';
-import { useEffect } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -25,7 +24,7 @@ type FormData = z.infer<typeof studyPlanSchema>;
 
 export default function StudyPlanForm() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(createStudyPlan, { message: '' });
+  const [state, formAction] = useActionState(createStudyPlan, { message: '' });
 
   const {
     register,

@@ -1,8 +1,7 @@
 
 'use client';
 
-import { useFormState } from 'react-dom';
-import { useEffect } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -22,7 +21,7 @@ type FormData = z.infer<typeof augmentSchema>;
 
 export default function MaterialAugmenter() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(createAugmentedContent, { message: '' });
+  const [state, formAction] = useActionState(createAugmentedContent, { message: '' });
 
   const {
     register,

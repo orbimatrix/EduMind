@@ -1,8 +1,7 @@
 
 'use client';
 
-import { useFormState } from 'react-dom';
-import { useEffect } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -28,7 +27,7 @@ type FormData = z.infer<typeof quizSchema>;
 
 export default function QuizGenerator() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(createQuiz, { message: '' });
+  const [state, formAction] = useActionState(createQuiz, { message: '' });
   const [numQuestions, setNumQuestions] = React.useState(5);
 
   const {
