@@ -44,6 +44,7 @@ const teacherMenuItems = [
     { href: '/teacher/resources', label: 'Resources', icon: FilePlus },
     { href: '/teacher/announcements', label: 'Announcements', icon: Bell },
     { href: '/teacher/curriculum', label: 'Curriculum', icon: Book },
+    { href: '/teacher/profile', label: 'Profile', icon: User },
 ]
 
 export function AppSidebar() {
