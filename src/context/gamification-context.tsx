@@ -69,7 +69,6 @@ export const GamificationProvider = ({ children }: { children: React.ReactNode }
   }, [level, badges.length]);
 
   const levelData = useMemo(() => {
-    const currentLevelBaseXp = (level - 1) * XP_PER_LEVEL;
     const nextLevelXp = level * XP_PER_LEVEL;
 
     const getTitle = () => {
@@ -92,7 +91,6 @@ export const GamificationProvider = ({ children }: { children: React.ReactNode }
   }, [level]);
 
   const getLevelProgress = useCallback(() => {
-    if (level === 0) return 0;
     const currentLevelBaseXp = (level - 1) * XP_PER_LEVEL;
     const xpIntoLevel = xp - currentLevelBaseXp;
     return (xpIntoLevel / XP_PER_LEVEL) * 100;
