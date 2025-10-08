@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import {
   ArrowRight,
   Book,
@@ -135,7 +134,7 @@ export default function LandingPage() {
     <div className="bg-background text-foreground">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6 lg:px-8">
-        <div className="container mx-auto flex h-16 items-center justify-between px-0">
+        <div className="container mx-auto flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="font-headline text-xl font-bold">EduMind AI</span>
@@ -190,54 +189,56 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-            <div
-                aria-hidden="true"
-                className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
-            >
-                <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-green-300 dark:from-blue-700"></div>
-                <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
-            </div>
-            <div className="container relative mx-auto text-center">
-                <Badge variant="secondary" className="mb-4">Your AI-Powered Study Companion</Badge>
-                <h1 className="font-headline text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-                    Study Smarter with EduMind 🧠
-                </h1>
-                <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-                    Upload any book and let AI turn it into a personalized tutor, quiz generator, and study planner.
-                </p>
-                <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                    <Button size="lg" asChild>
-                        <Link href="/dashboard">
-                            Get Started <ArrowRight className="ml-2" />
-                        </Link>
-                    </Button>
-                    <Button size="lg" variant="outline" asChild>
-                        <Link href="#features">Learn More</Link>
-                    </Button>
+        <section className="relative py-20 md:py-32">
+             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    aria-hidden="true"
+                    className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+                >
+                    <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-green-300 dark:from-blue-700"></div>
+                    <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
                 </div>
-                <div className="relative mt-12 md:mt-16 mx-auto max-w-4xl">
-                    <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-                    <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-                    <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-                    {heroImage &&
-                        <Image
-                            src={heroImage.imageUrl}
-                            alt="EduMind App Preview"
-                            width={1200}
-                            height={600}
-                            className="rounded-lg border shadow-2xl"
-                            data-ai-hint={heroImage.imageHint}
-                        />
-                    }
+                <div className="relative text-center">
+                    <Badge variant="secondary" className="mb-4">Your AI-Powered Study Companion</Badge>
+                    <h1 className="font-headline text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                        Study Smarter with EduMind 🧠
+                    </h1>
+                    <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+                        Upload any book and let AI turn it into a personalized tutor, quiz generator, and study planner.
+                    </p>
+                    <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                        <Button size="lg" asChild>
+                            <Link href="/dashboard">
+                                Get Started <ArrowRight className="ml-2" />
+                            </Link>
+                        </Button>
+                        <Button size="lg" variant="outline" asChild>
+                            <Link href="#features">Learn More</Link>
+                        </Button>
+                    </div>
+                    <div className="relative mt-12 md:mt-16 mx-auto max-w-4xl">
+                        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                        <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                        {heroImage &&
+                            <Image
+                                src={heroImage.imageUrl}
+                                alt="EduMind App Preview"
+                                width={1200}
+                                height={600}
+                                className="rounded-lg border shadow-2xl"
+                                data-ai-hint={heroImage.imageHint}
+                            />
+                        }
+                    </div>
                 </div>
             </div>
         </section>
 
 
         {/* Key Features Section */}
-        <section id="features" className="py-20 md:py-28 bg-muted/30 px-4 sm:px-6 lg:px-8">
-          <div className="container mx-auto">
+        <section id="features" className="py-20 md:py-28 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold sm:text-4xl">Core Functionalities</h2>
               <p className="mt-4 text-lg text-muted-foreground">
@@ -263,8 +264,8 @@ export default function LandingPage() {
         </section>
         
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
-            <div className="container mx-auto">
+        <section id="how-it-works" className="py-20 md:py-28">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold sm:text-4xl">A Simple 3-Step Flow</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
@@ -292,8 +293,8 @@ export default function LandingPage() {
 
 
         {/* Smart Features Section */}
-        <section id="smart-features" className="py-20 md:py-28 bg-muted/30 px-4 sm:px-6 lg:px-8">
-            <div className="container mx-auto">
+        <section id="smart-features" className="py-20 md:py-28 bg-muted/30">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold sm:text-4xl">AI in Action: A Deeper Look</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
@@ -327,8 +328,8 @@ export default function LandingPage() {
 
 
         {/* Use Cases Section */}
-        <section id="use-cases" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
-            <div className="container mx-auto">
+        <section id="use-cases" className="py-20 md:py-28">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold sm:text-4xl">Who Is It For?</h2>
                     <p className="mt-4 text-lg text-muted-foreground">
@@ -355,8 +356,8 @@ export default function LandingPage() {
 
 
         {/* Tech Stack Section */}
-        <section id="tech-stack" className="py-20 md:py-28 bg-muted/30 px-4 sm:px-6 lg:px-8">
-            <div className="container mx-auto text-center">
+        <section id="tech-stack" className="py-20 md:py-28 bg-muted/30">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="font-headline text-3xl font-bold sm:text-4xl">Powered by Cutting-Edge Technology</h2>
                 <p className="mt-4 text-lg text-muted-foreground">
                     We use the best tools to deliver a seamless and intelligent learning experience.
@@ -374,8 +375,8 @@ export default function LandingPage() {
 
 
         {/* CTA Section */}
-        <section id="cta" className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
-            <div className="container mx-auto text-center">
+        <section id="cta" className="py-20 md:py-28">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
                     Ready to Study Smarter?
                 </h2>
@@ -386,8 +387,8 @@ export default function LandingPage() {
                      <Button size="lg" asChild>
                         <Link href="/dashboard">Try Demo</Link>
                     </Button>
-                    <Button size="lg" variant="outline">
-                        Contact Team
+                    <Button size="lg" variant="outline" asChild>
+                        <Link href="/contact">Contact Team</Link>
                     </Button>
                 </div>
             </div>
@@ -398,7 +399,7 @@ export default function LandingPage() {
       <footer className="border-t bg-background">
         <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-            <div className="col-span-2 lg:col-span-1">
+            <div className="col-span-full md:col-span-2 lg:col-span-1">
               <Link href="/" className="flex items-center gap-2">
                 <GraduationCap className="h-7 w-7 text-primary" />
                 <span className="font-headline text-xl font-bold">EduMind AI</span>
@@ -410,24 +411,24 @@ export default function LandingPage() {
             <div>
               <h3 className="font-semibold text-foreground">Product</h3>
               <ul className="mt-4 space-y-2">
-                <li><Link href="#features" className="text-sm text-muted-foreground hover:text-foreground">Features</Link></li>
-                <li><Link href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground">How It Works</Link></li>
-                <li><Link href="#use-cases" className="text-sm text-muted-foreground hover:text-foreground">Use Cases</Link></li>
+                <li><Link href="/#features" className="text-sm text-muted-foreground hover:text-foreground">Features</Link></li>
+                <li><Link href="/#how-it-works" className="text-sm text-muted-foreground hover:text-foreground">How It Works</Link></li>
+                <li><Link href="/#use-cases" className="text-sm text-muted-foreground hover:text-foreground">Use Cases</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-foreground">Company</h3>
               <ul className="mt-4 space-y-2">
-                <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">About Us</Link></li>
-                <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Contact</Link></li>
-                <li><Link href="#" className="textsm text-muted-foreground hover:text-foreground">Docs</Link></li>
+                <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About Us</Link></li>
+                <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</Link></li>
+                <li><Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground">Docs</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-foreground">Legal</h3>
               <ul className="mt-4 space-y-2">
-                <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
-                <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
               </ul>
             </div>
           </div>

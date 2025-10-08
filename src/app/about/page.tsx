@@ -1,0 +1,80 @@
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GraduationCap, Users, Target } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+
+export default function AboutPage() {
+  return (
+    <div className="bg-background text-foreground">
+       <header className="sticky top-0 z-50 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6 lg:px-8">
+        <div className="container mx-auto flex h-16 items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <GraduationCap className="h-7 w-7 text-primary" />
+            <span className="font-headline text-xl font-bold">EduMind AI</span>
+          </Link>
+          <nav>
+            <Link href="/dashboard" className="text-sm font-medium hover:underline">
+              Go to App
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <Card>
+            <CardHeader className="text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                <Users className="h-8 w-8 text-primary" />
+              </div>
+              <h1 className="font-headline text-4xl font-bold">About EduMind AI</h1>
+              <p className="text-lg text-muted-foreground">
+                Revolutionizing the way students learn, one book at a time.
+              </p>
+            </CardHeader>
+            <CardContent className="prose prose-lg max-w-none dark:prose-invert">
+              <p>
+                EduMind AI was born from a simple idea: what if your textbook could talk back? In a world of passive reading and endless highlighting, we imagined a more interactive, personalized, and effective way to study. We are a team of passionate educators, engineers, and AI enthusiasts dedicated to making learning more engaging and accessible for everyone.
+              </p>
+
+              <div className="my-8 flex justify-center">
+                 <Image
+                    src="https://picsum.photos/seed/team/800/400"
+                    alt="Team working together"
+                    width={800}
+                    height={400}
+                    className="rounded-lg border shadow-lg"
+                    data-ai-hint="team collaboration"
+                />
+              </div>
+
+              <h2>Our Mission</h2>
+              <div className="flex items-start gap-4">
+                <Target className="mt-1 h-8 w-8 flex-shrink-0 text-primary" />
+                <p>
+                  Our mission is to empower students to achieve their full academic potential by transforming static study materials into dynamic, AI-powered learning companions. We believe that by leveraging cutting-edge technology, we can create a more equitable and effective educational landscape where every student has the tools they need to succeed.
+                </p>
+              </div>
+
+               <h2>Why EduMind AI?</h2>
+                <p>
+                    Traditional studying can be isolating and inefficient. Students spend hours reading dense texts, struggling to identify key concepts and gauge their own understanding. EduMind AI breaks this cycle by providing:
+                </p>
+                <ul>
+                    <li><strong>Instant Clarification:</strong> Get answers to your questions in real-time, just like you would with a personal tutor.</li>
+                    <li><strong>Personalized Roadmaps:</strong> Our AI generates study plans tailored to your specific needs and timeline.</li>
+                    <li><strong>Active Recall Practice:</strong> Dynamically generated quizzes help you test your knowledge and retain information more effectively.</li>
+                    <li><strong>Deeper Insights:</strong> We augment your learning materials with real-world examples and web research, connecting concepts to the bigger picture.</li>
+                </ul>
+
+                <p>
+                    Join us on our journey to make studying smarter, not harder.
+                </p>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
+  );
+}
