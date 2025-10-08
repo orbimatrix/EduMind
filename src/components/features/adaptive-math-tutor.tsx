@@ -50,25 +50,31 @@ export default function AdaptiveMathTutor() {
   });
 
   useEffect(() => {
-    if (state.message && state.message !== 'success') {
+    if (state.message && state.message !== 'success' && !state.data) {
       toast({
         variant: 'destructive',
         title: 'Error Generating Problem',
         description: state.message,
       });
-      setIsStarted(true); // Allow retry
+      setIsStarted(false); // Allow retry
     }
     if (state.message === 'success' && state.data) {
       setProblem(state.data);
       setFeedback(null);
       resetField('answer');
       setStartTime(Date.now());
+      if (!isStarted) {
+        setIsStarted(true);
+      }
     }
-  }, [state, toast, resetField]);
+  }, [state, toast, resetField, isStarted]);
 
-  const handleStart = () => {
-    setIsStarted(true);
-    fetchNewProblem();
+  const handleStartPractice = (formData: FormData) => {
+    formData.set('skill', skill);
+    formData.set('difficulty', String(difficulty));
+    formData.set('studentAbility', String(studentAbility));
+    formData.set('solveHistory', JSON.stringify(solveHistory));
+    formAction(formData);
   };
   
   const fetchNewProblem = () => {
@@ -122,7 +128,7 @@ export default function AdaptiveMathTutor() {
 
   if (!isStarted) {
     return (
-      <div className="flex flex-col items-center gap-4 text-center">
+      <form action={handleStartPractice} className="flex flex-col items-center gap-4 text-center">
          <div className="w-full max-w-sm space-y-2">
             <Label htmlFor="skill-select">Select a Topic to Practice</Label>
             <Select onValueChange={(value) => setSkill(value as any)} defaultValue={skill}>
@@ -136,8 +142,8 @@ export default function AdaptiveMathTutor() {
                 </SelectContent>
             </Select>
         </div>
-        <Button onClick={handleStart} size="lg">Start Practice</Button>
-      </div>
+        <FormSubmitButton size="lg">Start Practice</FormSubmitButton>
+      </form>
     );
   }
 
