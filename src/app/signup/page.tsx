@@ -11,6 +11,7 @@ import { SiGoogle } from '@icons-pack/react-simple-icons';
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { useRouter } from 'next/navigation';
 
 const getPasswordStrength = (password: string) => {
     let score = 0;
@@ -28,6 +29,12 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
   const passwordStrength = getPasswordStrength(password);
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push('/dashboard');
+  };
 
   return (
     <div className="relative min-h-screen w-full bg-background">
@@ -50,7 +57,7 @@ export default function SignupPage() {
               <CardDescription>Join EduMind AI to start your smart learning journey.</CardDescription>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                  <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
                   <div className="relative">
@@ -106,11 +113,11 @@ export default function SignupPage() {
               </Separator>
 
               <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => router.push('/dashboard')}>
                    <SiGoogle className="mr-2 h-4 w-4" />
                   Google
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => router.push('/dashboard')}>
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
                 </Button>
@@ -129,4 +136,3 @@ export default function SignupPage() {
     </div>
   );
 }
-

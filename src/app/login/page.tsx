@@ -11,9 +11,16 @@ import { SiGoogle } from '@icons-pack/react-simple-icons';
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push('/dashboard');
+  };
 
   return (
     <div className="relative min-h-screen w-full bg-background">
@@ -36,7 +43,7 @@ export default function LoginPage() {
               <CardDescription>Enter your credentials to access your account.</CardDescription>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
@@ -80,11 +87,11 @@ export default function LoginPage() {
               </Separator>
 
               <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => router.push('/dashboard')}>
                    <SiGoogle className="mr-2 h-4 w-4" />
                   Google
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => router.push('/dashboard')}>
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
                 </Button>
