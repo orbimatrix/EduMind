@@ -14,9 +14,27 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Trash2, Edit, MoreHorizontal } from 'lucide-react';
+import { Plus, Trash2, Edit, MoreHorizontal, FileText, CheckCircle, Book } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import {
@@ -30,6 +48,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 const assessmentSchema = z.object({
+  id: z.number().optional(),
   title: z.string().min(3, 'Title must be at least 3 characters long.'),
   subject: z.string().min(2, 'Subject must be at least 2 characters long.'),
   numQuestions: z.coerce.number().min(1, 'Must have at least one question.'),
@@ -73,31 +92,39 @@ const initialAssessments: Assessment[] = [
 export default function AssessmentManager() {
   const [assessments, setAssessments] = useState<Assessment[]>(initialAssessments);
   const [showForm, setShowForm] = useState(false);
+  const [editingAssessment, setEditingAssessment] = useState<Assessment | null>(null);
   const { toast } = useToast();
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<AssessmentFormValues>({
     resolver: zodResolver(assessmentSchema),
   });
 
   const onSubmit: SubmitHandler<AssessmentFormValues> = (data) => {
-    const newAssessment: Assessment = {
-      id: Date.now(),
-      date: new Date(),
-      status: 'Draft',
-      ...data,
-    };
-    setAssessments([newAssessment, ...assessments]);
+    if (editingAssessment) {
+        setAssessments(assessments.map(a => a.id === editingAssessment.id ? { ...a, ...data } : a));
+        toast({ title: 'Assessment Updated', description: `"${data.title}" has been updated.`});
+        setEditingAssessment(null);
+    } else {
+        const newAssessment: Assessment = {
+        id: Date.now(),
+        date: new Date(),
+        status: 'Draft',
+        ...data,
+        };
+        setAssessments([newAssessment, ...assessments]);
+        toast({
+        title: 'Assessment Created',
+        description: `"${data.title}" has been saved as a draft.`,
+        });
+        setShowForm(false);
+    }
     reset();
-    setShowForm(false);
-    toast({
-      title: 'Assessment Created',
-      description: `"${data.title}" has been saved as a draft.`,
-    });
   };
 
   const deleteAssessment = (id: number) => {
@@ -106,6 +133,27 @@ export default function AssessmentManager() {
       title: 'Assessment Deleted',
     });
   };
+
+  const toggleStatus = (id: number) => {
+    setAssessments(assessments.map(a => {
+        if (a.id === id) {
+            const newStatus = a.status === 'Draft' ? 'Published' : 'Draft';
+            toast({
+                title: `Assessment ${newStatus}`,
+                description: `"${a.title}" is now ${newStatus.toLowerCase()}.`
+            })
+            return { ...a, status: newStatus };
+        }
+        return a;
+    }));
+  };
+
+  const openEditDialog = (assessment: Assessment) => {
+    setEditingAssessment(assessment);
+    setValue('title', assessment.title);
+    setValue('subject', assessment.subject);
+    setValue('numQuestions', assessment.numQuestions);
+  }
 
   return (
     <div className="space-y-6">
@@ -169,6 +217,44 @@ export default function AssessmentManager() {
         </Card>
       )}
 
+      {editingAssessment && (
+        <AlertDialog open onOpenChange={() => { setEditingAssessment(null); reset(); }}>
+            <AlertDialogContent>
+                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <AlertDialogHeader>
+                    <AlertDialogTitle>Edit Assessment</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Make changes to your assessment details below.
+                    </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="edit-title">Title</Label>
+                            <Input id="edit-title" {...register('title')} />
+                            {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="edit-subject">Subject</Label>
+                                <Input id="edit-subject" {...register('subject')} />
+                                {errors.subject && <p className="text-sm text-destructive">{errors.subject.message}</p>}
+                            </div>
+                             <div className="space-y-2">
+                                <Label htmlFor="edit-numQuestions">Questions</Label>
+                                <Input id="edit-numQuestions" type="number" {...register('numQuestions')} />
+                                {errors.numQuestions && <p className="text-sm text-destructive">{errors.numQuestions.message}</p>}
+                            </div>
+                        </div>
+                    </div>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction type="submit">Save Changes</AlertDialogAction>
+                    </AlertDialogFooter>
+                </form>
+            </AlertDialogContent>
+        </AlertDialog>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>My Assessments</CardTitle>
@@ -197,8 +283,8 @@ export default function AssessmentManager() {
                       variant={assessment.status === 'Published' ? 'secondary' : 'outline'}
                       className={
                         assessment.status === 'Published'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200'
+                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200'
                       }
                     >
                       {assessment.status}
@@ -206,12 +292,33 @@ export default function AssessmentManager() {
                   </TableCell>
                   <TableCell>{format(assessment.date, 'MMM d, yyyy')}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => deleteAssessment(assessment.id)}>
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem onSelect={() => openEditDialog(assessment)}>
+                          <Edit className="mr-2 h-4 w-4" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => toggleStatus(assessment.id)}>
+                            {assessment.status === 'Draft' ? <CheckCircle className="mr-2 h-4 w-4" /> : <FileText className="mr-2 h-4 w-4" />}
+                            <span>{assessment.status === 'Draft' ? 'Publish' : 'Unpublish'}</span>
+                        </DropdownMenuItem>
+                         <DropdownMenuItem disabled>
+                          <Book className="mr-2 h-4 w-4" />
+                          <span>Add Questions</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive" onSelect={() => deleteAssessment(assessment.id)}>
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))}
