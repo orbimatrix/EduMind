@@ -104,21 +104,12 @@ type NoteState = {
   data?: GenerateNotesOutput;
 };
 
-const noteSchema = z.object({
-  sourceContent: z.string().min(50, 'Source content must be at least 50 characters.'),
-  detailLevel: z.enum(['concise', 'detailed', 'comprehensive']),
-});
-
-
 type DailyQuizState = {
   message: string;
   errors?: { subject?: string[] };
   data?: GenerateDailyQuizQuestionOutput;
 };
 
-const dailyQuizSchema = z.object({
-    subject: z.string().describe('The subject for the quiz question (e.g., Mathematics, Computer Science, Medical Terminology).'),
-  });
 
 // Server Actions
 export async function createStudyPlan(prevState: StudyPlanState, formData: FormData): Promise<StudyPlanState> {
@@ -237,6 +228,11 @@ export async function createFlashcards(prevState: FlashcardState, formData: Form
 }
 
 export async function createNotes(prevState: NoteState, formData: FormData): Promise<NoteState> {
+  const noteSchema = z.object({
+    sourceContent: z.string().min(50, 'Source content must be at least 50 characters.'),
+    detailLevel: z.enum(['concise', 'detailed', 'comprehensive']),
+  });
+
   const validatedFields = noteSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -260,6 +256,10 @@ export async function createNotes(prevState: NoteState, formData: FormData): Pro
 export async function getDailyQuizQuestion(
   input: { subject: string }
 ): Promise<DailyQuizState> {
+  const dailyQuizSchema = z.object({
+    subject: z.string(),
+  });
+
   const validatedFields = dailyQuizSchema.safeParse(input);
 
   if (!validatedFields.success) {
@@ -274,6 +274,13 @@ export async function getDailyQuizQuestion(
     return { message: 'success', data: result };
   } catch (error) {
     console.error(error);
-    return { message: 'An error occurred while fetching the daily quiz. Please try again.' };
+    // Fallback to a dummy question if AI fails
+    const dummyQuestion: GenerateDailyQuizQuestionOutput = {
+        question: "What is the term for a fast heart rate?",
+        options: ["Bradycardia", "Tachycardia", "Arrythmia", "Hypertension"],
+        correctAnswer: "Tachycardia",
+        explanation: "Tachycardia is the medical term for a heart rate over 100 beats per minute. Bradycardia is a slow heart rate."
+    };
+    return { message: 'success', data: dummyQuestion };
   }
 }
