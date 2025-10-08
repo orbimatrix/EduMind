@@ -6,7 +6,7 @@ import { generatePersonalizedStudyPlan } from '@/ai/flows/generate-personalized-
 import { generateExamRelevantQuizzes } from '@/ai/flows/generate-exam-relevant-quizzes';
 import { extractKeyTopicsFromPastPapers } from '@/ai/flows/extract-key-topics-from-past-papers';
 import { augmentLearningMaterialsWithWebResearch } from '@/ai/flows/augment-learning-materials-with-web-research';
-import type { GenerateExamRelevantQuizzesOutput } from '@/aiflows/generate-exam-relevant-quizzes';
+import type { GenerateExamRelevantQuizzesOutput } from '@/ai/flows/generate-exam-relevant-quizzes';
 import {
   generateChapterSummary,
   type GenerateChapterSummaryOutput,
@@ -17,7 +17,6 @@ import {
 } from '@/ai/flows/generate-flashcards';
 import {
   generateNotes,
-  type GenerateNotesInput,
   type GenerateNotesOutput,
 } from '@/ai/flows/generate-notes';
 import {
@@ -49,10 +48,6 @@ const augmentSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
 });
 
-const flashcardSchema = z.object({
-  sourceContent: z.string().min(50, 'Content must be at least 50 characters long.'),
-});
-
 
 // Types for server action state
 type StudyPlanState = {
@@ -79,7 +74,13 @@ type AugmentState = {
     data?: string;
 }
 
-const GenerateChapterSummaryInputSchema = z.object({
+type ChapterSummaryState = {
+  message: string;
+  errors?: z.ZodError<z.infer<typeof chapterSummarySchema>>['formErrors']['fieldErrors'];
+  data?: GenerateChapterSummaryOutput;
+}
+
+const chapterSummarySchema = z.object({
   chapterContent: z
     .string().min(1, 'Chapter content is required.'),
   documentType: z
@@ -87,17 +88,15 @@ const GenerateChapterSummaryInputSchema = z.object({
 });
 
 
-type ChapterSummaryState = {
-  message: string;
-  errors?: z.ZodError<z.infer<typeof GenerateChapterSummaryInputSchema>>['formErrors']['fieldErrors'];
-  data?: GenerateChapterSummaryOutput;
-}
-
 type FlashcardState = {
   message: string;
   errors?: { sourceContent?: string[] };
   data?: GenerateFlashcardsOutput;
 }
+
+const flashcardSchema = z.object({
+  sourceContent: z.string().min(50, 'Content must be at least 50 characters long.'),
+});
 
 type NoteState = {
   message: string;
@@ -105,11 +104,21 @@ type NoteState = {
   data?: GenerateNotesOutput;
 };
 
+const noteSchema = z.object({
+  sourceContent: z.string().min(50, 'Source content must be at least 50 characters.'),
+  detailLevel: z.enum(['concise', 'detailed', 'comprehensive']),
+});
+
+
 type DailyQuizState = {
   message: string;
   errors?: { subject?: string[] };
   data?: GenerateDailyQuizQuestionOutput;
 };
+
+const dailyQuizSchema = z.object({
+    subject: z.string().describe('The subject for the quiz question (e.g., Mathematics, Computer Science, Medical Terminology).'),
+  });
 
 // Server Actions
 export async function createStudyPlan(prevState: StudyPlanState, formData: FormData): Promise<StudyPlanState> {
@@ -190,7 +199,7 @@ export async function createAugmentedContent(prevState: AugmentState, formData: 
 }
 
 export async function createChapterSummary(prevState: ChapterSummaryState, formData: FormData): Promise<ChapterSummaryState> {
-  const validatedFields = GenerateChapterSummaryInputSchema.safeParse(Object.fromEntries(formData.entries()));
+  const validatedFields = chapterSummarySchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validatedFields.success) {
     return {
@@ -228,15 +237,7 @@ export async function createFlashcards(prevState: FlashcardState, formData: Form
 }
 
 export async function createNotes(prevState: NoteState, formData: FormData): Promise<NoteState> {
-  const GenerateNotesInputSchema = z.object({
-    sourceContent: z
-      .string()
-      .min(50, 'Source content must be at least 50 characters.'),
-    detailLevel: z
-      .enum(['concise', 'detailed', 'comprehensive']),
-  });
-
-  const validatedFields = GenerateNotesInputSchema.safeParse(
+  const validatedFields = noteSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
 
@@ -248,7 +249,7 @@ export async function createNotes(prevState: NoteState, formData: FormData): Pro
   }
 
   try {
-    const result = await generateNotes(validatedFields.data as GenerateNotesInput);
+    const result = await generateNotes(validatedFields.data);
     return { message: 'success', data: result };
   } catch (error) {
     console.error(error);
@@ -259,11 +260,7 @@ export async function createNotes(prevState: NoteState, formData: FormData): Pro
 export async function getDailyQuizQuestion(
   input: { subject: string }
 ): Promise<DailyQuizState> {
-   const GenerateDailyQuizQuestionInputSchema = z.object({
-    subject: z.string().describe('The subject for the quiz question (e.g., Mathematics, Computer Science, Medical Terminology).'),
-  });
-
-  const validatedFields = GenerateDailyQuizQuestionInputSchema.safeParse(input);
+  const validatedFields = dailyQuizSchema.safeParse(input);
 
   if (!validatedFields.success) {
     return {
