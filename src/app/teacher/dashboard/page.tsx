@@ -9,7 +9,7 @@ const features = [
     { title: "Gradebook", description: "Manage grades and calculate averages.", icon: ClipboardList, href: "/teacher/gradebook", enabled: true },
     { title: "Assessments", description: "Create, distribute, and grade tests.", icon: CheckSquare, href: "/teacher/assessments", enabled: true },
     { title: "Resources", description: "Upload and share learning materials.", icon: FilePlus, href: "/teacher/resources", enabled: true },
-    { title: "Announcements", description: "Communicate with your students.", icon: Bell, href: "#", enabled: false },
+    { title: "Announcements", description: "Communicate with your students.", icon: Bell, href: "/teacher/announcements", enabled: true },
     { title: "Curriculum", description: "Manage and build your course content.", icon: Book, href: "#", enabled: false },
 ];
 
