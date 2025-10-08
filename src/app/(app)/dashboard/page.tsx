@@ -1,10 +1,13 @@
 
+'use client';
+
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import FileUpload from '@/components/features/file-upload';
 import { ArrowRight, Award, BrainCircuit, ListTodo, MessageSquareQuote, MessagesSquare, Search, Star } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { useGamification } from '@/context/gamification-context';
 
 const featureCards = [
   {
@@ -40,6 +43,8 @@ const featureCards = [
 ];
 
 export default function DashboardPage() {
+  const { level, xp, getLevelProgress, levelData } = useGamification();
+  const progress = getLevelProgress();
 
   return (
     <div className="space-y-8">
@@ -50,8 +55,8 @@ export default function DashboardPage() {
                     <Star className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">Level 5</div>
-                    <p className="text-xs text-muted-foreground">Scholar</p>
+                    <div className="text-2xl font-bold">Level {level}</div>
+                    <p className="text-xs text-muted-foreground">{levelData.title}</p>
                 </CardContent>
             </Card>
             <Card>
@@ -60,8 +65,8 @@ export default function DashboardPage() {
                     <Award className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">1250 / 2000</div>
-                    <Progress value={62.5} className="h-2 mt-1" />
+                    <div className="text-2xl font-bold">{xp} / {levelData.nextLevelXp}</div>
+                    <Progress value={progress} className="h-2 mt-1" />
                 </CardContent>
             </Card>
              <Card className="col-span-1 md:col-span-2">
@@ -70,8 +75,8 @@ export default function DashboardPage() {
                     <BrainCircuit className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">Level 6 Badge</div>
-                    <p className="text-xs text-muted-foreground">Unlock the 'Guru' badge and get premium features.</p>
+                    <div className="text-2xl font-bold">Level {level + 1} Badge</div>
+                    <p className="text-xs text-muted-foreground">Unlock the next badge and get premium features.</p>
                 </CardContent>
             </Card>
         </div>
@@ -82,7 +87,7 @@ export default function DashboardPage() {
           <CardHeader>
             <CardTitle>Vectorize Your Textbook</CardTitle>
             <CardDescription>
-              Upload a document to earn XP and start your learning journey.
+              Upload a document to earn 10 XP and start your learning journey.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -119,4 +124,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
