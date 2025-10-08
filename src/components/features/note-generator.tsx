@@ -58,8 +58,8 @@ export default function NoteGenerator() {
             className="min-h-60"
             {...register('sourceContent')}
           />
-          {errors.sourceContent && (
-            <p className="text-sm text-destructive">{errors.sourceContent.message}</p>
+          {(errors.sourceContent || state.errors?.sourceContent) && (
+            <p className="text-sm text-destructive">{errors.sourceContent?.message || state.errors?.sourceContent?.[0]}</p>
           )}
         </div>
 
@@ -81,8 +81,8 @@ export default function NoteGenerator() {
               </Select>
             )}
           />
-          {errors.detailLevel && (
-            <p className="text-sm text-destructive">{errors.detailLevel.message}</p>
+           {(errors.detailLevel || state.errors?.detailLevel) && (
+            <p className="text-sm text-destructive">{errors.detailLevel?.message || state.errors?.detailLevel?.[0]}</p>
           )}
         </div>
 

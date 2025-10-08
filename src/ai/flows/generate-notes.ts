@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Generates structured notes from academic or technical text.
@@ -8,9 +9,9 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 
-export const GenerateNotesInputSchema = z.object({
+const GenerateNotesInputSchema = z.object({
   sourceContent: z
     .string()
     .describe('The academic or technical text to be converted into notes.'),
@@ -20,7 +21,7 @@ export const GenerateNotesInputSchema = z.object({
 });
 export type GenerateNotesInput = z.infer<typeof GenerateNotesInputSchema>;
 
-export const GenerateNotesOutputSchema = z.object({
+const GenerateNotesOutputSchema = z.object({
   notes: z
     .string()
     .describe(

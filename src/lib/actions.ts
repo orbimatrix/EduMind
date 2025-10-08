@@ -17,7 +17,7 @@ import {
 } from '@/ai/flows/generate-flashcards';
 import {
   generateNotes,
-  GenerateNotesInputSchema,
+  type GenerateNotesInput,
   type GenerateNotesOutput,
 } from '@/ai/flows/generate-notes';
 
@@ -74,9 +74,17 @@ type AugmentState = {
     data?: string;
 }
 
+const GenerateChapterSummaryInputSchema = z.object({
+  chapterContent: z
+    .string().min(1, 'Chapter content is required.'),
+  documentType: z
+    .enum(['Novel', 'Textbook', 'Research Paper', 'Scientific Journal']),
+});
+
+
 type ChapterSummaryState = {
   message: string;
-  errors?: { chapterContent?: string[], documentType?: string[] };
+  errors?: z.ZodError<z.infer<typeof GenerateChapterSummaryInputSchema>>['formErrors']['fieldErrors'];
   data?: GenerateChapterSummaryOutput;
 }
 
@@ -171,13 +179,6 @@ export async function createAugmentedContent(prevState: AugmentState, formData: 
 }
 
 export async function createChapterSummary(prevState: ChapterSummaryState, formData: FormData): Promise<ChapterSummaryState> {
-  const GenerateChapterSummaryInputSchema = z.object({
-    chapterContent: z
-      .string().min(1, 'Chapter content is required.'),
-    documentType: z
-      .enum(['Novel', 'Textbook', 'Research Paper', 'Scientific Journal']),
-  });
-
   const validatedFields = GenerateChapterSummaryInputSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validatedFields.success) {
@@ -216,6 +217,14 @@ export async function createFlashcards(prevState: FlashcardState, formData: Form
 }
 
 export async function createNotes(prevState: NoteState, formData: FormData): Promise<NoteState> {
+  const GenerateNotesInputSchema = z.object({
+    sourceContent: z
+      .string()
+      .min(50, 'Source content must be at least 50 characters.'),
+    detailLevel: z
+      .enum(['concise', 'detailed', 'comprehensive']),
+  });
+
   const validatedFields = GenerateNotesInputSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -228,7 +237,7 @@ export async function createNotes(prevState: NoteState, formData: FormData): Pro
   }
 
   try {
-    const result = await generateNotes(validatedFields.data);
+    const result = await generateNotes(validatedFields.data as GenerateNotesInput);
     return { message: 'success', data: result };
   } catch (error) {
     console.error(error);
