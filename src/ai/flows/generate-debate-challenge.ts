@@ -10,7 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-export const GenerateDebateChallengeInputSchema = z.object({
+const GenerateDebateChallengeInputSchema = z.object({
   topic: z.string().describe('The topic of the debate.'),
   userArgument: z.string().describe("The user's argument or opening statement."),
   debateHistory: z.array(z.object({
@@ -20,7 +20,7 @@ export const GenerateDebateChallengeInputSchema = z.object({
 });
 export type GenerateDebateChallengeInput = z.infer<typeof GenerateDebateChallengeInputSchema>;
 
-export const GenerateDebateChallengeOutputSchema = z.object({
+const GenerateDebateChallengeOutputSchema = z.object({
   counterArgument: z.string().describe("The AI's counter-argument."),
 });
 export type GenerateDebateChallengeOutput = z.infer<typeof GenerateDebateChallengeOutputSchema>;

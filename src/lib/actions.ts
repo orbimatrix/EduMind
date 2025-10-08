@@ -13,7 +13,7 @@ import { generateNotes, type GenerateNotesOutput } from '@/ai/flows/generate-not
 import { generateDailyQuizQuestion, type GenerateDailyQuizQuestionOutput } from '@/ai/flows/generate-daily-quiz-question';
 import { generateAudioFromText } from '@/ai/flows/generate-audio-from-text';
 import { ai } from '@/ai/genkit';
-import { generateDebateChallenge, GenerateDebateChallengeInputSchema } from '@/ai/flows/generate-debate-challenge';
+import { generateDebateChallenge } from '@/ai/flows/generate-debate-challenge';
 
 
 // Schemas for form validation
@@ -37,6 +37,15 @@ const keyTopicsSchema = z.object({
 
 const augmentSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
+});
+
+export const GenerateDebateChallengeInputSchema = z.object({
+  topic: z.string().describe('The topic of the debate.'),
+  userArgument: z.string().describe("The user's argument or opening statement."),
+  debateHistory: z.array(z.object({
+    role: z.enum(['user', 'model']),
+    content: z.string(),
+  })).describe('The history of the debate so far.'),
 });
 
 
