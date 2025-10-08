@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -27,6 +27,7 @@ const menuItems = [
   { href: '/topics', label: 'Key Topics', icon: Search },
   { href: '/augment', label: 'Augment', icon: BrainCircuit },
   { href: '/knowledge-graph', label: 'Knowledge Graph', icon: Share2 },
+  { href: '/analytics', label: 'Analytics', icon: LineChart },
   { href: '/profile', label: 'Profile', icon: User },
 ];
 

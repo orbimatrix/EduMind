@@ -18,6 +18,7 @@ const pageTitles: { [key: string]: string } = {
   '/augment': 'Augmented Learning Materials',
   '/chat': 'Interactive Chat Support',
   '/knowledge-graph': 'Knowledge Graph',
+  '/analytics': 'Performance Analytics',
   '/profile': 'My Profile',
 };
 
