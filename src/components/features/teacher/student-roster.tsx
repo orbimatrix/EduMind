@@ -12,7 +12,15 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { BarChart2, MessageSquare, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react"
 
 const students = [
   { id: 'S001', name: 'Alice Johnson', avatar: 'https://picsum.photos/seed/alice/100/100', grade: 92, progress: 92, status: 'On Track' },
@@ -76,9 +84,33 @@ export default function StudentRoster() {
                   </div>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button variant="ghost" size="icon">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
+                  <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                              <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem>
+                              <BarChart2 className="mr-2 h-4 w-4" />
+                              <span>View Detailed Report</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                              <MessageSquare className="mr-2 h-4 w-4" />
+                              <span>Send Message</span>
+                          </DropdownMenuItem>
+                           <DropdownMenuItem>
+                              <RefreshCw className="mr-2 h-4 w-4" />
+                              <span>Reset Progress</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-destructive">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              <span>Remove Student</span>
+                          </DropdownMenuItem>
+                      </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}
