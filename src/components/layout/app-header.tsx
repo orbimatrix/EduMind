@@ -1,4 +1,3 @@
-
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -19,6 +18,7 @@ const pageTitles: { [key: string]: string } = {
   '/chat': 'Interactive Chat Support',
   '/knowledge-graph': 'Knowledge Graph',
   '/analytics': 'Performance Analytics',
+  '/study-rooms': 'Collaborative Study Rooms',
   '/profile': 'My Profile',
 };
 

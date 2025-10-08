@@ -1,9 +1,8 @@
-
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -28,6 +27,7 @@ const menuItems = [
   { href: '/augment', label: 'Augment', icon: BrainCircuit },
   { href: '/knowledge-graph', label: 'Knowledge Graph', icon: Share2 },
   { href: '/analytics', label: 'Analytics', icon: LineChart },
+  { href: '/study-rooms', label: 'Study Rooms', icon: Users },
   { href: '/profile', label: 'Profile', icon: User },
 ];
 
