@@ -5,7 +5,7 @@ import { useActionState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { createChapterSummary, GenerateChapterSummaryInputSchema } from '@/lib/actions';
+import { createChapterSummary } from '@/lib/actions';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { FormSubmitButton } from '@/components/features/form-submit-button';
@@ -14,6 +14,14 @@ import { useToast } from '@/hooks/use-toast';
 import { CheckCircle2, FlaskConical, Key, Pilcrow } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '../ui/badge';
+
+const GenerateChapterSummaryInputSchema = z.object({
+  chapterContent: z
+    .string().min(1, 'Chapter content is required.'),
+  documentType: z
+    .enum(['Novel', 'Textbook', 'Research Paper', 'Scientific Journal']),
+});
+
 
 type FormData = z.infer<typeof GenerateChapterSummaryInputSchema>;
 

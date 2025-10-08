@@ -35,7 +35,7 @@ const augmentSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
 });
 
-export const GenerateChapterSummaryInputSchema = z.object({
+const GenerateChapterSummaryInputSchema = z.object({
   chapterContent: z
     .string().min(1, 'Chapter content is required.'),
   documentType: z
