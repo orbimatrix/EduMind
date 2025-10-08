@@ -8,3 +8,4 @@ import '@/ai/flows/generate-personalized-study-plan.ts';
 import '@/ai/flows/generate-quiz-from-chapter.ts';
 import '@/ai/flows/generate-chapter-summary.ts';
 import '@/ai/flows/generate-flashcards.ts';
+import '@/ai/flows/generate-notes.ts';

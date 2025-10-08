@@ -13,6 +13,7 @@ const pageTitles: { [key: string]: string } = {
   '/quizzes': 'Quiz & Test Generation',
   '/summarizer': 'Chapter Summarizer',
   '/flashcards': 'Flashcard Generator',
+  '/notes': 'Note Generator',
   '/topics': 'Past Paper Topic Extraction',
   '/augment': 'Augmented Learning Materials',
   '/chat': 'Interactive Chat Support',

@@ -15,6 +15,11 @@ import {
   generateFlashcards,
   type GenerateFlashcardsOutput,
 } from '@/ai/flows/generate-flashcards';
+import {
+  generateNotes,
+  GenerateNotesInputSchema,
+  type GenerateNotesOutput,
+} from '@/ai/flows/generate-notes';
 
 // Schemas for form validation
 const studyPlanSchema = z.object({
@@ -80,6 +85,12 @@ type FlashcardState = {
   errors?: { sourceContent?: string[] };
   data?: GenerateFlashcardsOutput;
 }
+
+type NoteState = {
+  message: string;
+  errors?: { sourceContent?: string[]; detailLevel?: string[] };
+  data?: GenerateNotesOutput;
+};
 
 // Server Actions
 export async function createStudyPlan(prevState: StudyPlanState, formData: FormData): Promise<StudyPlanState> {
@@ -201,5 +212,26 @@ export async function createFlashcards(prevState: FlashcardState, formData: Form
   } catch (error) {
     console.error(error);
     return { message: 'An error occurred while generating flashcards. Please try again.' };
+  }
+}
+
+export async function createNotes(prevState: NoteState, formData: FormData): Promise<NoteState> {
+  const validatedFields = GenerateNotesInputSchema.safeParse(
+    Object.fromEntries(formData.entries())
+  );
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid form data.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const result = await generateNotes(validatedFields.data);
+    return { message: 'success', data: result };
+  } catch (error) {
+    console.error(error);
+    return { message: 'An error occurred while generating notes. Please try again.' };
   }
 }
