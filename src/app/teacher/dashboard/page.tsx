@@ -10,7 +10,7 @@ const features = [
     { title: "Assessments", description: "Create, distribute, and grade tests.", icon: CheckSquare, href: "/teacher/assessments", enabled: true },
     { title: "Resources", description: "Upload and share learning materials.", icon: FilePlus, href: "/teacher/resources", enabled: true },
     { title: "Announcements", description: "Communicate with your students.", icon: Bell, href: "/teacher/announcements", enabled: true },
-    { title: "Curriculum", description: "Manage and build your course content.", icon: Book, href: "/teacher/curriculum", enabled: false },
+    { title: "Curriculum", description: "Manage and build your course content.", icon: Book, href: "/teacher/curriculum", enabled: true },
 ];
 
 export default function TeacherDashboardPage() {

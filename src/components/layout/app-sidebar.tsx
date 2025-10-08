@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords, Briefcase, ClipboardList, CheckSquare, FilePlus, Bell } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords, Briefcase, ClipboardList, CheckSquare, FilePlus, Bell, Book } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -43,6 +43,7 @@ const teacherMenuItems = [
     { href: '/teacher/assessments', label: 'Assessments', icon: CheckSquare },
     { href: '/teacher/resources', label: 'Resources', icon: FilePlus },
     { href: '/teacher/announcements', label: 'Announcements', icon: Bell },
+    { href: '/teacher/curriculum', label: 'Curriculum', icon: Book },
 ]
 
 export function AppSidebar() {
