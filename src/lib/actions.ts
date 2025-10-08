@@ -14,6 +14,7 @@ import { generateDailyQuizQuestion, type GenerateDailyQuizQuestionOutput } from 
 import { generateAudioFromText } from '@/ai/flows/generate-audio-from-text';
 import { ai } from '@/ai/genkit';
 import { generateDebateChallenge } from '@/ai/flows/generate-debate-challenge';
+import { generateAdaptiveMathProblem, type GenerateAdaptiveMathProblemOutput } from '@/ai/flows/generate-adaptive-math-problem';
 
 
 // Schemas for form validation
@@ -115,6 +116,12 @@ type DebateChallengeState = {
     errors?: z.ZodError<any>['formErrors']['fieldErrors'];
     data?: string;
 }
+
+type AdaptiveMathState = {
+  message: string;
+  errors?: z.ZodError<any>['formErrors']['fieldErrors'];
+  data?: GenerateAdaptiveMathProblemOutput;
+};
 
 
 
@@ -364,4 +371,31 @@ export async function createDebateChallenge(prevState: DebateChallengeState, for
         console.error(error);
         return { message: 'An error occurred during the debate. Please try again.' };
     }
+}
+
+
+export async function createAdaptiveMathProblem(prevState: AdaptiveMathState, formData: FormData): Promise<AdaptiveMathState> {
+  const schema = z.object({
+    skill: z.enum(['fractions_decimals', 'algebra', 'geometry']),
+    difficulty: z.coerce.number().min(1).max(5),
+    studentAbility: z.coerce.number(),
+    solveHistory: z.string().transform(str => JSON.parse(str)),
+  });
+
+  const validatedFields = schema.safeParse(Object.fromEntries(formData.entries()));
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid form data.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const result = await generateAdaptiveMathProblem(validatedFields.data);
+    return { message: 'success', data: result };
+  } catch (error) {
+    console.error(error);
+    return { message: 'An error occurred while generating the math problem. Please try again.' };
+  }
 }

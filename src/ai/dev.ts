@@ -15,3 +15,4 @@ import '@/ai/flows/generate-daily-quiz-question.ts';
 import '@/ai/flows/generate-audio-from-text.ts';
 import '@/ai/flows/generate-debate-challenge.ts';
 import '@/ai/flows/generate-resource-summary.ts';
+import '@/ai/flows/generate-adaptive-math-problem.ts';
