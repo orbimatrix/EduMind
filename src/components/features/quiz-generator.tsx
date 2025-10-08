@@ -16,11 +16,13 @@ import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
 import React from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const quizSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
   examType: z.string().min(3, 'Exam type is required and must be at least 3 characters.'),
   numQuestions: z.coerce.number().min(1).max(10),
+  difficulty: z.enum(['Easy', 'Medium', 'Hard']),
 });
 
 type FormData = z.infer<typeof quizSchema>;
@@ -38,6 +40,7 @@ export default function QuizGenerator() {
     resolver: zodResolver(quizSchema),
     defaultValues: {
       numQuestions: 5,
+      difficulty: 'Medium',
     },
   });
 
@@ -75,6 +78,23 @@ export default function QuizGenerator() {
           </div>
         </div>
 
+        <div className="space-y-2">
+            <Label htmlFor="difficulty">Difficulty Level</Label>
+            <Select onValueChange={(value) => setValue('difficulty', value as 'Easy' | 'Medium' | 'Hard')} defaultValue="Medium">
+                <SelectTrigger id="difficulty">
+                    <SelectValue placeholder="Select difficulty" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="Easy">Easy</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="Hard">Hard</SelectItem>
+                </SelectContent>
+            </Select>
+            {(errors.difficulty || state.errors?.difficulty) && (
+                <p className="text-sm text-destructive">{errors.difficulty?.message || state.errors?.difficulty?.[0]}</p>
+            )}
+        </div>
+
         <div className="space-y-3">
           <Label htmlFor="numQuestions">Number of Questions: <Badge variant="secondary">{numQuestions}</Badge></Label>
           <Slider
@@ -90,6 +110,7 @@ export default function QuizGenerator() {
             )}
         </div>
         <input type="hidden" {...register('numQuestions')} />
+        <input type="hidden" {...register('difficulty')} />
         <FormSubmitButton>Generate Quiz</FormSubmitButton>
       </form>
 

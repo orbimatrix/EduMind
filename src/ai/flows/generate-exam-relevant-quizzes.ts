@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Generates quizzes with exam-relevant questions based on specified chapters or topics.
@@ -14,6 +15,7 @@ const GenerateExamRelevantQuizzesInputSchema = z.object({
   topic: z.string().describe('The specific chapter or topic for which to generate the quiz.'),
   examType: z.string().describe('The type of exam the quiz should be relevant to (e.g., board exam, entrance exam).'),
   numQuestions: z.number().describe('The number of questions to generate for the quiz.'),
+  difficulty: z.enum(['Easy', 'Medium', 'Hard']).describe('The difficulty level of the quiz questions.'),
 });
 export type GenerateExamRelevantQuizzesInput = z.infer<typeof GenerateExamRelevantQuizzesInputSchema>;
 
@@ -39,14 +41,15 @@ const generateExamRelevantQuizzesPrompt = ai.definePrompt({
   output: {schema: GenerateExamRelevantQuizzesOutputSchema},
   prompt: `You are an expert educator specializing in creating exam-relevant quizzes.
 
-  Given the topic, exam type, and the number of questions requested, generate a quiz with the specified parameters.
+  Given the topic, exam type, number of questions, and difficulty level requested, generate a quiz with the specified parameters.
   Each question should have multiple choice options, the correct answer, and an explanation of why the answer is correct.
 
   Topic: {{{topic}}}
   Exam Type: {{{examType}}}
   Number of Questions: {{{numQuestions}}}
+  Difficulty: {{{difficulty}}}
 
-  Ensure that the generated questions are relevant to the specified exam type and cover the key concepts of the topic.
+  Ensure that the generated questions are relevant to the specified exam type and cover the key concepts of the topic at the chosen difficulty.
   The output should be a JSON object containing an array of quiz questions, each with the following format:
   {
     "question": "The text of the quiz question",

@@ -19,6 +19,7 @@ const quizSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
   examType: z.string().min(3, 'Exam type is required and must be at least 3 characters.'),
   numQuestions: z.coerce.number().min(1, "Please generate at least 1 question.").max(10, "You can generate a maximum of 10 questions at a time."),
+  difficulty: z.enum(['Easy', 'Medium', 'Hard']),
 });
 
 const keyTopicsSchema = z.object({
@@ -39,7 +40,7 @@ type StudyPlanState = {
 
 type QuizState = {
   message: string;
-  errors?: { topic?: string[]; examType?: string[]; numQuestions?: string[] };
+  errors?: { topic?: string[]; examType?: string[]; numQuestions?: string[]; difficulty?: string[] };
   data?: GenerateExamRelevantQuizzesOutput;
 };
 
