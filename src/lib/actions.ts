@@ -7,6 +7,11 @@ import { generateExamRelevantQuizzes } from '@/ai/flows/generate-exam-relevant-q
 import { extractKeyTopicsFromPastPapers } from '@/ai/flows/extract-key-topics-from-past-papers';
 import { augmentLearningMaterialsWithWebResearch } from '@/ai/flows/augment-learning-materials-with-web-research';
 import type { GenerateExamRelevantQuizzesOutput } from '@/ai/flows/generate-exam-relevant-quizzes';
+import {
+  generateChapterSummary,
+  GenerateChapterSummaryInputSchema,
+  type GenerateChapterSummaryOutput,
+} from '@/ai/flows/generate-chapter-summary';
 
 // Schemas for form validation
 const studyPlanSchema = z.object({
@@ -54,6 +59,12 @@ type AugmentState = {
     message: string;
     errors?: { topic?: string[] };
     data?: string;
+}
+
+type ChapterSummaryState = {
+  message: string;
+  errors?: z.ZodIssue[];
+  data?: GenerateChapterSummaryOutput;
 }
 
 // Server Actions
@@ -131,5 +142,24 @@ export async function createAugmentedContent(prevState: AugmentState, formData: 
   } catch (error) {
     console.error(error);
     return { message: 'An error occurred while augmenting content. Please try again.' };
+  }
+}
+
+export async function createChapterSummary(prevState: ChapterSummaryState, formData: FormData): Promise<ChapterSummaryState> {
+  const validatedFields = GenerateChapterSummaryInputSchema.safeParse(Object.fromEntries(formData.entries()));
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid form data.',
+      errors: validatedFields.error.issues,
+    };
+  }
+
+  try {
+    const result = await generateChapterSummary(validatedFields.data);
+    return { message: 'success', data: result };
+  } catch (error) {
+    console.error(error);
+    return { message: 'An error occurred while generating the summary. Please try again.' };
   }
 }
