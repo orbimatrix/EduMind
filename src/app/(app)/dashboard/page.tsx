@@ -8,6 +8,7 @@ import FileUpload from '@/components/features/file-upload';
 import { ArrowRight, Award, BrainCircuit, ListTodo, MessageSquareQuote, MessagesSquare, Search, Star } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { useGamification } from '@/context/gamification-context';
+import DailyChallenge from '@/components/features/daily-challenge';
 
 const featureCards = [
   {
@@ -81,6 +82,9 @@ export default function DashboardPage() {
             </Card>
         </div>
 
+        <div className="space-y-4">
+            <DailyChallenge />
+        </div>
 
       <div className="space-y-4">
         <Card>

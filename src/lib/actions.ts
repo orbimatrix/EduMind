@@ -6,7 +6,7 @@ import { generatePersonalizedStudyPlan } from '@/ai/flows/generate-personalized-
 import { generateExamRelevantQuizzes } from '@/ai/flows/generate-exam-relevant-quizzes';
 import { extractKeyTopicsFromPastPapers } from '@/ai/flows/extract-key-topics-from-past-papers';
 import { augmentLearningMaterialsWithWebResearch } from '@/ai/flows/augment-learning-materials-with-web-research';
-import type { GenerateExamRelevantQuizzesOutput } from '@/ai/flows/generate-exam-relevant-quizzes';
+import type { GenerateExamRelevantQuizzesOutput } from '@/aiflows/generate-exam-relevant-quizzes';
 import {
   generateChapterSummary,
   type GenerateChapterSummaryOutput,
@@ -20,6 +20,12 @@ import {
   type GenerateNotesInput,
   type GenerateNotesOutput,
 } from '@/ai/flows/generate-notes';
+import {
+  generateDailyQuizQuestion,
+  GenerateDailyQuizQuestionInputSchema,
+  type GenerateDailyQuizQuestionOutput,
+} from '@/ai/flows/generate-daily-quiz-question';
+
 
 // Schemas for form validation
 const studyPlanSchema = z.object({
@@ -98,6 +104,12 @@ type NoteState = {
   message: string;
   errors?: { sourceContent?: string[]; detailLevel?: string[] };
   data?: GenerateNotesOutput;
+};
+
+type DailyQuizState = {
+  message: string;
+  errors?: { subject?: string[] };
+  data?: GenerateDailyQuizQuestionOutput;
 };
 
 // Server Actions
@@ -242,5 +254,26 @@ export async function createNotes(prevState: NoteState, formData: FormData): Pro
   } catch (error) {
     console.error(error);
     return { message: 'An error occurred while generating notes. Please try again.' };
+  }
+}
+
+export async function getDailyQuizQuestion(
+  input: z.infer<typeof GenerateDailyQuizQuestionInputSchema>
+): Promise<DailyQuizState> {
+  const validatedFields = GenerateDailyQuizQuestionInputSchema.safeParse(input);
+
+  if (!validatedFields.success) {
+    return {
+      message: 'Invalid input.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const result = await generateDailyQuizQuestion(validatedFields.data);
+    return { message: 'success', data: result };
+  } catch (error) {
+    console.error(error);
+    return { message: 'An error occurred while fetching the daily quiz. Please try again.' };
   }
 }
