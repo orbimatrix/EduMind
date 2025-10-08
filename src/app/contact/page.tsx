@@ -29,13 +29,13 @@ export default function ContactPage() {
                     <Mail className="h-8 w-8 text-primary" />
                 </div>
                 <CardTitle className="font-headline text-4xl font-bold">Contact Us</CardTitle>
-                <CardDescription className="text-lg">
-                    We'd love to hear from you.
+                <CardDescription className="mt-2 text-lg">
+                    We&apos;d love to hear from you.
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-8 text-center">
+            <CardContent className="space-y-8 text-center px-6 pb-6">
                 <p className="text-muted-foreground">
-                    Have a question, feedback, or a partnership inquiry? Reach out to our team, and we'll get back to you as soon as possible.
+                    Have a question, feedback, or a partnership inquiry? Reach out to our team, and we&apos;ll get back to you as soon as possible.
                 </p>
                 <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                      <Button asChild size="lg">

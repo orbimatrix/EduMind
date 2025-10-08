@@ -20,7 +20,6 @@ import {
   BookOpenCheck,
   Github,
   Linkedin,
-  Disc,
   Menu,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -28,6 +27,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
+import { SiDiscord } from '@icons-pack/react-simple-icons';
 
 const featureCards = [
   {
@@ -75,7 +75,7 @@ const howItWorksSteps = [
   },
   {
     title: 'Study Smarter, Not Harder',
-    description: 'Chat with your book, generate quizzes, and get a personalized study plan instantly.',
+    description: 'Chat with your book, get quizzes, and get a personalized study plan instantly.',
     icon: Sparkles,
   },
 ];
@@ -301,7 +301,7 @@ export default function LandingPage() {
                         Explore some of the advanced capabilities that make EduMind an unparalleled study partner.
                     </p>
                 </div>
-                <div className="mt-12 space-y-12">
+                <div className="mt-12 space-y-16">
                     {advancedFeatures.map((feature, index) => (
                         <div key={feature.title} className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
                             <div className={index % 2 === 1 ? 'md:order-2' : 'md:order-1'}>
@@ -398,8 +398,8 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t bg-background">
         <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-            <div className="col-span-full md:col-span-2 lg:col-span-1">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
+            <div className="col-span-full lg:col-span-1">
               <Link href="/" className="flex items-center gap-2">
                 <GraduationCap className="h-7 w-7 text-primary" />
                 <span className="font-headline text-xl font-bold">EduMind AI</span>
@@ -408,7 +408,7 @@ export default function LandingPage() {
                 Supercharging your study sessions with the power of AI.
               </p>
             </div>
-            <div>
+            <div className="col-start-auto col-span-1">
               <h3 className="font-semibold text-foreground">Product</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link href="/#features" className="text-sm text-muted-foreground hover:text-foreground">Features</Link></li>
@@ -416,7 +416,7 @@ export default function LandingPage() {
                 <li><Link href="/#use-cases" className="text-sm text-muted-foreground hover:text-foreground">Use Cases</Link></li>
               </ul>
             </div>
-            <div>
+            <div className="col-start-auto col-span-1">
               <h3 className="font-semibold text-foreground">Company</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About Us</Link></li>
@@ -424,7 +424,7 @@ export default function LandingPage() {
                 <li><Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground">Docs</Link></li>
               </ul>
             </div>
-            <div>
+            <div className="col-start-auto col-span-1">
               <h3 className="font-semibold text-foreground">Legal</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
@@ -440,7 +440,7 @@ export default function LandingPage() {
             <div className="flex items-center gap-2">
                 <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Github/></Link>
                 <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Linkedin/></Link>
-                <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Disc/></Link>
+                <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><SiDiscord /></Link>
             </div>
           </div>
         </div>

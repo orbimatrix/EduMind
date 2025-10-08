@@ -29,11 +29,11 @@ export default function AboutPage() {
                 <Users className="h-8 w-8 text-primary" />
               </div>
               <h1 className="font-headline text-4xl font-bold">About EduMind AI</h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="mt-2 text-lg text-muted-foreground">
                 Revolutionizing the way students learn, one book at a time.
               </p>
             </CardHeader>
-            <CardContent className="prose prose-lg max-w-none dark:prose-invert">
+            <CardContent className="prose prose-lg max-w-none dark:prose-invert px-6 pb-6">
               <p>
                 EduMind AI was born from a simple idea: what if your textbook could talk back? In a world of passive reading and endless highlighting, we imagined a more interactive, personalized, and effective way to study. We are a team of passionate educators, engineers, and AI enthusiasts dedicated to making learning more engaging and accessible for everyone.
               </p>
@@ -50,12 +50,9 @@ export default function AboutPage() {
               </div>
 
               <h2>Our Mission</h2>
-              <div className="flex items-start gap-4">
-                <Target className="mt-1 h-8 w-8 flex-shrink-0 text-primary" />
                 <p>
                   Our mission is to empower students to achieve their full academic potential by transforming static study materials into dynamic, AI-powered learning companions. We believe that by leveraging cutting-edge technology, we can create a more equitable and effective educational landscape where every student has the tools they need to succeed.
                 </p>
-              </div>
 
                <h2>Why EduMind AI?</h2>
                 <p>

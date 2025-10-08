@@ -28,9 +28,9 @@ export default function TermsPage() {
                 <FileText className="h-8 w-8 text-primary" />
               </div>
               <h1 className="font-headline text-4xl font-bold">Terms of Service</h1>
-              <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+              <p className="mt-2 text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
             </CardHeader>
-            <CardContent className="prose prose-lg max-w-none dark:prose-invert">
+            <CardContent className="prose prose-lg max-w-none dark:prose-invert px-6 pb-6">
               <p>
                 Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the EduMind AI application (the "Service") operated by us.
               </p>

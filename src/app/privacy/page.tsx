@@ -28,9 +28,9 @@ export default function PrivacyPage() {
                 <Shield className="h-8 w-8 text-primary" />
               </div>
               <h1 className="font-headline text-4xl font-bold">Privacy Policy</h1>
-              <p className="text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+              <p className="mt-2 text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
             </CardHeader>
-            <CardContent className="prose prose-lg max-w-none dark:prose-invert">
+            <CardContent className="prose prose-lg max-w-none dark:prose-invert px-6 pb-6">
                 <p>
                     Welcome to EduMind AI. We are committed to protecting your privacy and handling your data in an open and transparent manner. This privacy policy sets out how we collect, use, and protect any information that you give us when you use this application.
                 </p>

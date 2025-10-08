@@ -28,11 +28,11 @@ export default function DocsPage() {
                     <BookOpen className="h-8 w-8 text-primary" />
                 </div>
                 <CardTitle className="font-headline text-4xl font-bold">Documentation</CardTitle>
-                <CardDescription className="text-lg">
+                <CardDescription className="mt-2 text-lg">
                     Your guide to using and integrating EduMind AI.
                 </CardDescription>
             </CardHeader>
-            <CardContent className="prose prose-lg max-w-none dark:prose-invert">
+            <CardContent className="prose prose-lg max-w-none dark:prose-invert px-6 pb-6">
                 <p>
                     Welcome to the EduMind AI documentation. This section is currently under development and will soon be filled with comprehensive guides, tutorials, and API references to help you get the most out of our platform.
                 </p>
