@@ -1,8 +1,9 @@
+
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords, Briefcase, ClipboardList } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords, Briefcase, ClipboardList, CheckSquare } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -39,6 +40,7 @@ const teacherMenuItems = [
     { href: '/teacher/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/teacher/performance', label: 'Performance', icon: Users },
     { href: '/teacher/gradebook', label: 'Gradebook', icon: ClipboardList },
+    { href: '/teacher/assessments', label: 'Assessments', icon: CheckSquare },
 ]
 
 export function AppSidebar() {
