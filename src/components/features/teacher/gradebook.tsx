@@ -11,16 +11,8 @@ import {
 } from "@/components/ui/table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Download, Filter, MoreHorizontal, Edit, BarChart2, MessageSquare, Trash2 } from "lucide-react"
+import { Download, Filter } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 const gradeData = [
   { id: 'S001', name: 'Alice Johnson', avatar: 'https://picsum.photos/seed/alice/100/100', assignments: { quiz1: 95, midterm: 88, project1: 92 } },
@@ -81,7 +73,6 @@ export default function Gradebook() {
               <TableHead className="text-center">Midterm</TableHead>
               <TableHead className="text-center">Project 1</TableHead>
               <TableHead className="text-center font-bold bg-muted/50">Final Grade</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -105,36 +96,6 @@ export default function Gradebook() {
                     <GradeCell grade={student.assignments.midterm} />
                     <GradeCell grade={student.assignments.project1} />
                     <GradeCell grade={finalGrade} />
-
-                    <TableCell className="text-right">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>
-                                    <Edit className="mr-2 h-4 w-4" />
-                                    <span>Edit Grades</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <BarChart2 className="mr-2 h-4 w-4" />
-                                    <span>View Analytics</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <MessageSquare className="mr-2 h-4 w-4" />
-                                    <span>Send Message</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem className="text-destructive">
-                                    <Trash2 className="mr-2 h-4 w-4" />
-                                    <span>Delete Record</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </TableCell>
                 </TableRow>
               )
             })}
