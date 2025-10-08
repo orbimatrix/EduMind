@@ -39,15 +39,6 @@ const augmentSchema = z.object({
   topic: z.string().min(3, 'Topic is required and must be at least 3 characters.'),
 });
 
-export const GenerateDebateChallengeInputSchema = z.object({
-  topic: z.string().describe('The topic of the debate.'),
-  userArgument: z.string().describe("The user's argument or opening statement."),
-  debateHistory: z.array(z.object({
-    role: z.enum(['user', 'model']),
-    content: z.string(),
-  })).describe('The history of the debate so far.'),
-});
-
 
 // Types for server action state
 type StudyPlanState = {
@@ -121,7 +112,7 @@ type ChatCompletionState = {
 
 type DebateChallengeState = {
     message: string;
-    errors?: z.ZodError<z.infer<typeof GenerateDebateChallengeInputSchema>>['formErrors']['fieldErrors'];
+    errors?: z.ZodError<any>['formErrors']['fieldErrors'];
     data?: string;
 }
 
@@ -341,10 +332,19 @@ export async function createChatCompletion(prevState: ChatCompletionState, formD
 }
 
 export async function createDebateChallenge(prevState: DebateChallengeState, formData: FormData): Promise<DebateChallengeState> {
+    const debateInputSchema = z.object({
+        topic: z.string().describe('The topic of the debate.'),
+        userArgument: z.string().describe("The user's argument or opening statement."),
+        debateHistory: z.array(z.object({
+            role: z.enum(['user', 'model']),
+            content: z.string(),
+        })).describe('The history of the debate so far.'),
+    });
+
     const rawData = Object.fromEntries(formData.entries());
     const parsedHistory = JSON.parse(rawData.debateHistory as string);
     
-    const validatedFields = GenerateDebateChallengeInputSchema.safeParse({
+    const validatedFields = debateInputSchema.safeParse({
         topic: rawData.topic,
         userArgument: rawData.userArgument,
         debateHistory: parsedHistory,
