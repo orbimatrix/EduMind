@@ -397,11 +397,11 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t">
         <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col-reverse items-center justify-between gap-4 md:flex-row">
-                 <p className="text-center text-sm text-muted-foreground">
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+                <p className="text-sm text-muted-foreground md:order-1">
                     © {new Date().getFullYear()} EduMind. Built with ❤️ by Studio.
                 </p>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 md:order-2">
                     <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Github/></Link>
                     <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Linkedin/></Link>
                     <Link href="#" className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Disc/></Link>
