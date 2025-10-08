@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, User } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -23,6 +23,7 @@ const menuItems = [
   { href: '/chat', label: 'Chat', icon: MessagesSquare },
   { href: '/topics', label: 'Key Topics', icon: Search },
   { href: '/augment', label: 'Augment', icon: BrainCircuit },
+  { href: '/profile', label: 'Profile', icon: User },
 ];
 
 export function AppSidebar() {

@@ -11,6 +11,7 @@ const pageTitles: { [key: string]: string } = {
   '/topics': 'Past Paper Topic Extraction',
   '/augment': 'Augmented Learning Materials',
   '/chat': 'Interactive Chat Support',
+  '/profile': 'My Profile',
 };
 
 export default function AppHeader() {
