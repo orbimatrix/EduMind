@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords, Briefcase } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -11,11 +11,14 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const menuItems = [
+const studentMenuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/study-plan', label: 'Study Plan', icon: ListTodo },
   { href: '/quizzes', label: 'Quizzes', icon: MessageSquareQuote },
@@ -32,9 +35,18 @@ const menuItems = [
   { href: '/profile', label: 'Profile', icon: User },
 ];
 
+const teacherMenuItems = [
+    { href: '/teacher/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/teacher/performance', label: 'Performance', icon: Users },
+]
+
 export function AppSidebar() {
   const pathname = usePathname();
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
+  
+  const isTeacherView = pathname.startsWith('/teacher');
+
+  const menuItems = isTeacherView ? teacherMenuItems : studentMenuItems;
 
   return (
     <Sidebar>
@@ -46,21 +58,45 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.href}
-                tooltip={{ children: item.label }}
-                className="w-full justify-start"
-              >
-                <Link href={item.href}>
-                  <item.icon />
-                  <span>{item.label}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {isTeacherView ? (
+             <SidebarGroup>
+              <SidebarGroupLabel className="flex items-center gap-2">
+                <Briefcase />
+                Teacher Tools
+              </SidebarGroupLabel>
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === item.href}
+                    tooltip={{ children: item.label }}
+                    className="w-full justify-start"
+                  >
+                    <Link href={item.href}>
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarGroup>
+          ) : (
+             menuItems.map((item) => (
+              <SidebarMenuItem key={item.href}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === item.href}
+                  tooltip={{ children: item.label }}
+                  className="w-full justify-start"
+                >
+                  <Link href={item.href}>
+                    <item.icon />
+                    <span>{item.label}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+             ))
+          )}
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
