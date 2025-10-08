@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "Abstract technological background representing AI learning",
+      "imageUrl": "https://picsum.photos/seed/hero/1200/600",
+      "imageHint": "abstract technology"
+    },
+    {
+      "id": "study-plan",
+      "description": "A person writing on a planner",
+      "imageUrl": "https://picsum.photos/seed/plan/400/300",
+      "imageHint": "writing planner"
+    },
+    {
+      "id": "quiz",
+      "description": "A multiple choice question on a paper",
+      "imageUrl": "https://picsum.photos/seed/quiz/400/300",
+      "imageHint": "multiple choice"
+    },
+    {
+      "id": "topics",
+      "description": "Highlighting text in a book",
+      "imageUrl": "https://picsum.photos/seed/topics/400/300",
+      "imageHint": "highlighting book"
+    },
+    {
+      "id": "augment",
+      "description": "Person researching on a laptop",
+      "imageUrl": "https://picsum.photos/seed/augment/400/300",
+      "imageHint": "laptop research"
+    },
+    {
+      "id": "chat",
+      "description": "A stylish chat interface on a screen",
+      "imageUrl": "https://picsum.photos/seed/chat/400/300",
+      "imageHint": "chat interface"
+    },
+    {
+      "id": "user-avatar",
+      "description": "Avatar for a user",
+      "imageUrl": "https://picsum.photos/seed/avatar/100/100",
+      "imageHint": "person portrait"
+    }
+  ]
 }
