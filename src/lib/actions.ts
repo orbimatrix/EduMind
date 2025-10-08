@@ -22,7 +22,6 @@ import {
 } from '@/ai/flows/generate-notes';
 import {
   generateDailyQuizQuestion,
-  GenerateDailyQuizQuestionInputSchema,
   type GenerateDailyQuizQuestionOutput,
 } from '@/ai/flows/generate-daily-quiz-question';
 
@@ -258,8 +257,12 @@ export async function createNotes(prevState: NoteState, formData: FormData): Pro
 }
 
 export async function getDailyQuizQuestion(
-  input: z.infer<typeof GenerateDailyQuizQuestionInputSchema>
+  input: { subject: string }
 ): Promise<DailyQuizState> {
+   const GenerateDailyQuizQuestionInputSchema = z.object({
+    subject: z.string().describe('The subject for the quiz question (e.g., Mathematics, Computer Science, Medical Terminology).'),
+  });
+
   const validatedFields = GenerateDailyQuizQuestionInputSchema.safeParse(input);
 
   if (!validatedFields.success) {

@@ -8,14 +8,14 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 
-export const GenerateDailyQuizQuestionInputSchema = z.object({
+const GenerateDailyQuizQuestionInputSchema = z.object({
   subject: z.string().describe('The subject for the quiz question (e.g., Mathematics, Computer Science, Medical Terminology).'),
 });
 export type GenerateDailyQuizQuestionInput = z.infer<typeof GenerateDailyQuizQuestionInputSchema>;
 
-export const GenerateDailyQuizQuestionOutputSchema = z.object({
+const GenerateDailyQuizQuestionOutputSchema = z.object({
   question: z.string().describe('The text of the quiz question.'),
   options: z.array(z.string()).describe('The possible answer options for the question.'),
   correctAnswer: z.string().describe('The correct answer to the question.'),
