@@ -11,24 +11,17 @@ export default function QuizzesPage() {
           <MessageSquareQuote className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <h1 className="font-headline text-3xl font-bold">Quiz & Test Generation</h1>
+          <h1 className="font-headline text-3xl font-bold">Exam Simulation</h1>
           <p className="mt-1 text-muted-foreground">
-            Dynamically generate quizzes with exam-relevant questions based on any chapter or topic.
+            Take timed practice tests with AI-generated questions to prepare for your exams.
           </p>
         </div>
       </div>
 
-      <Card className="shadow-sm">
-        <CardHeader>
-          <CardTitle className="font-headline">Create a New Quiz</CardTitle>
-          <CardDescription>
-            Specify the topic, exam type, and number of questions to create a practice quiz instantly.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <QuizGenerator />
-        </CardContent>
-      </Card>
+      <QuizGenerator />
+      
     </div>
   );
 }
+
+    
