@@ -233,7 +233,7 @@ export default function AssessmentManager() {
                             <Input id="edit-title" {...register('title')} />
                             {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit-subject">Subject</Label>
                                 <Input id="edit-subject" {...register('subject')} />
@@ -265,10 +265,10 @@ export default function AssessmentManager() {
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
-                <TableHead>Subject</TableHead>
+                <TableHead className="hidden md:table-cell">Subject</TableHead>
                 <TableHead className="text-center">Questions</TableHead>
                 <TableHead className="text-center">Status</TableHead>
-                <TableHead>Date Created</TableHead>
+                <TableHead className="hidden sm:table-cell">Date Created</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -276,7 +276,7 @@ export default function AssessmentManager() {
               {assessments.map((assessment) => (
                 <TableRow key={assessment.id}>
                   <TableCell className="font-medium">{assessment.title}</TableCell>
-                  <TableCell>{assessment.subject}</TableCell>
+                  <TableCell className="hidden md:table-cell">{assessment.subject}</TableCell>
                   <TableCell className="text-center">{assessment.numQuestions}</TableCell>
                   <TableCell className="text-center">
                     <Badge
@@ -290,7 +290,7 @@ export default function AssessmentManager() {
                       {assessment.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>{format(assessment.date, 'MMM d, yyyy')}</TableCell>
+                  <TableCell className="hidden sm:table-cell">{format(assessment.date, 'MMM d, yyyy')}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
