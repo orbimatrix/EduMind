@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users } from 'lucide-react';
+import { BrainCircuit, GraduationCap, LayoutDashboard, ListTodo, MessageSquareQuote, MessagesSquare, Search, Share2, User, BookText, Layers, ClipboardEdit, LineChart, Users, Swords } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -23,6 +23,7 @@ const menuItems = [
   { href: '/flashcards', label: 'Flashcards', icon: Layers },
   { href: '/notes', label: 'Notes', icon: ClipboardEdit },
   { href: '/chat', label: 'Chat', icon: MessagesSquare },
+  { href: '/debate', label: 'Debate Arena', icon: Swords },
   { href: '/topics', label: 'Key Topics', icon: Search },
   { href: '/augment', label: 'Augment', icon: BrainCircuit },
   { href: '/knowledge-graph', label: 'Knowledge Graph', icon: Share2 },

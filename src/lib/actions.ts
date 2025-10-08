@@ -7,24 +7,13 @@ import { generateExamRelevantQuizzes } from '@/ai/flows/generate-exam-relevant-q
 import { extractKeyTopicsFromPastPapers } from '@/ai/flows/extract-key-topics-from-past-papers';
 import { augmentLearningMaterialsWithWebResearch } from '@/ai/flows/augment-learning-materials-with-web-research';
 import type { GenerateExamRelevantQuizzesOutput } from '@/ai/flows/generate-exam-relevant-quizzes';
-import {
-  generateChapterSummary,
-  type GenerateChapterSummaryOutput,
-} from '@/ai/flows/generate-chapter-summary';
-import {
-  generateFlashcards,
-  type GenerateFlashcardsOutput,
-} from '@/ai/flows/generate-flashcards';
-import {
-  generateNotes,
-  type GenerateNotesOutput,
-} from '@/ai/flows/generate-notes';
-import {
-  generateDailyQuizQuestion,
-  type GenerateDailyQuizQuestionOutput,
-} from '@/ai/flows/generate-daily-quiz-question';
+import { generateChapterSummary, type GenerateChapterSummaryOutput } from '@/ai/flows/generate-chapter-summary';
+import { generateFlashcards, type GenerateFlashcardsOutput } from '@/ai/flows/generate-flashcards';
+import { generateNotes, type GenerateNotesOutput } from '@/ai/flows/generate-notes';
+import { generateDailyQuizQuestion, type GenerateDailyQuizQuestionOutput } from '@/ai/flows/generate-daily-quiz-question';
 import { generateAudioFromText } from '@/ai/flows/generate-audio-from-text';
 import { ai } from '@/ai/genkit';
+import { generateDebateChallenge, GenerateDebateChallengeInputSchema } from '@/ai/flows/generate-debate-challenge';
 
 
 // Schemas for form validation
@@ -120,6 +109,13 @@ type ChatCompletionState = {
         audio?: string;
     }
 }
+
+type DebateChallengeState = {
+    message: string;
+    errors?: z.ZodError<z.infer<typeof GenerateDebateChallengeInputSchema>>['formErrors']['fieldErrors'];
+    data?: string;
+}
+
 
 
 // Server Actions
@@ -332,5 +328,31 @@ export async function createChatCompletion(prevState: ChatCompletionState, formD
     } catch (error) {
         console.error(error);
         return { message: 'An error occurred during chat completion. Please try again.' };
+    }
+}
+
+export async function createDebateChallenge(prevState: DebateChallengeState, formData: FormData): Promise<DebateChallengeState> {
+    const rawData = Object.fromEntries(formData.entries());
+    const parsedHistory = JSON.parse(rawData.debateHistory as string);
+    
+    const validatedFields = GenerateDebateChallengeInputSchema.safeParse({
+        topic: rawData.topic,
+        userArgument: rawData.userArgument,
+        debateHistory: parsedHistory,
+    });
+
+    if (!validatedFields.success) {
+        return {
+            message: 'Invalid form data.',
+            errors: validatedFields.error.flatten().fieldErrors,
+        };
+    }
+
+    try {
+        const result = await generateDebateChallenge(validatedFields.data);
+        return { message: 'success', data: result.counterArgument };
+    } catch (error) {
+        console.error(error);
+        return { message: 'An error occurred during the debate. Please try again.' };
     }
 }
