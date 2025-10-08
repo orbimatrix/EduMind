@@ -23,6 +23,8 @@ import {
   generateDailyQuizQuestion,
   type GenerateDailyQuizQuestionOutput,
 } from '@/ai/flows/generate-daily-quiz-question';
+import { generateAudioFromText } from '@/ai/flows/generate-audio-from-text';
+import { ai } from '@/ai/genkit';
 
 
 // Schemas for form validation
@@ -109,6 +111,15 @@ type DailyQuizState = {
   errors?: { subject?: string[] };
   data?: GenerateDailyQuizQuestionOutput;
 };
+
+type ChatCompletionState = {
+    message: string;
+    errors?: { prompt?: string[] };
+    data?: {
+        text: string;
+        audio?: string;
+    }
+}
 
 
 // Server Actions
@@ -283,4 +294,43 @@ export async function getDailyQuizQuestion(
     };
     return { message: 'success', data: dummyQuestion };
   }
+}
+
+export async function createChatCompletion(prevState: ChatCompletionState, formData: FormData): Promise<ChatCompletionState> {
+    const chatSchema = z.object({
+        prompt: z.string().min(1),
+        chatHistory: z.string(),
+    });
+
+    const validatedFields = chatSchema.safeParse(Object.fromEntries(formData.entries()));
+
+    if (!validatedFields.success) {
+        return {
+            message: 'Invalid form data.',
+            errors: validatedFields.error.flatten().fieldErrors,
+        };
+    }
+    
+    const { prompt, chatHistory } = validatedFields.data;
+    const parsedHistory = JSON.parse(chatHistory);
+
+    try {
+        const history = parsedHistory.map((msg: { text: string, sender: string }) => ({
+            role: msg.sender === 'user' ? 'user' : 'model',
+            content: [{ text: msg.text }],
+        }));
+
+        const { text } = await ai.generate({
+            prompt: prompt,
+            history: history,
+        });
+
+        const { audio } = await generateAudioFromText(text);
+
+        return { message: 'success', data: { text, audio } };
+
+    } catch (error) {
+        console.error(error);
+        return { message: 'An error occurred during chat completion. Please try again.' };
+    }
 }

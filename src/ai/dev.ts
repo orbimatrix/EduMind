@@ -11,3 +11,4 @@ import '@/ai/flows/generate-chapter-summary.ts';
 import '@/ai/flows/generate-flashcards.ts';
 import '@/ai/flows/generate-notes.ts';
 import '@/ai/flows/generate-daily-quiz-question.ts';
+import '@/ai/flows/generate-audio-from-text.ts';
