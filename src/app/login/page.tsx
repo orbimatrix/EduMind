@@ -6,20 +6,26 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AtSign, Eye, EyeOff, Github, GraduationCap, LockKeyhole } from 'lucide-react';
+import { AtSign, Eye, EyeOff, Github, GraduationCap, LockKeyhole, Users } from 'lucide-react';
 import { SiGoogle } from '@icons-pack/react-simple-icons';
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState('student');
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/dashboard');
+    if (role === 'teacher') {
+      router.push('/teacher/dashboard');
+    } else {
+      router.push('/dashboard');
+    }
   };
 
   return (
@@ -44,6 +50,29 @@ export default function LoginPage() {
             </CardHeader>
             <CardContent>
               <form className="space-y-4" onSubmit={handleSubmit}>
+                <div className="space-y-2">
+                  <Label>Select Your Role</Label>
+                  <RadioGroup defaultValue="student" value={role} onValueChange={setRole} className="grid grid-cols-2 gap-4">
+                    <div>
+                      <RadioGroupItem value="student" id="student" className="peer sr-only" />
+                      <Label
+                        htmlFor="student"
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        Student
+                      </Label>
+                    </div>
+                    <div>
+                      <RadioGroupItem value="teacher" id="teacher" className="peer sr-only" />
+                      <Label
+                        htmlFor="teacher"
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        Teacher
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
