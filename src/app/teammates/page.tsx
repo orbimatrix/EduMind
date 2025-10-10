@@ -12,13 +12,13 @@ const teammates = [
     name: 'Saqib Iqbal',
     role: 'Full stack',
     email: 'saqibiqbal27772@gmail.com',
-    avatarUrl: 'https://picsum.photos/seed/saqib/200/200',
+    avatarUrl: '/saqib_iqbal.jpeg',
   },
   {
-    name: 'Saqin Sharif',
+    name: 'Saqib Sharif',
     role: 'Gen AI & Team Lead',
     email: 'msaqibsharif430@gmail.com',
-    avatarUrl: 'https://picsum.photos/seed/saqin/200/200',
+    avatarUrl: '/saqib.jpeg',
   },
   {
     name: 'Mashood Farid',
@@ -28,9 +28,9 @@ const teammates = [
   },
   {
     name: 'Ammar Ahmad',
-    role: 'Project documentation and debugging',
+    role: 'Documentation',
     email: 'ammarahmad526@gmail.com',
-    avatarUrl: 'https://picsum.photos/seed/ammar/200/200',
+    avatarUrl: '/ammar.jpeg',
   },
 ];
 
