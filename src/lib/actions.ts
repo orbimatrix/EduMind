@@ -15,6 +15,7 @@ import { generateAudioFromText } from '@/ai/flows/generate-audio-from-text';
 import { ai } from '@/ai/genkit';
 import { generateDebateChallenge } from '@/ai/flows/generate-debate-challenge';
 import { generateAdaptiveMathProblem, type GenerateAdaptiveMathProblemOutput } from '@/ai/flows/generate-adaptive-math-problem';
+import { answerQuestion } from './api';
 
 
 // Schemas for form validation
@@ -102,14 +103,14 @@ type DailyQuizState = {
   data?: GenerateDailyQuizQuestionOutput;
 };
 
-type ChatCompletionState = {
-    message: string;
-    errors?: { prompt?: string[] };
-    data?: {
-        text: string;
-        audio?: string;
-    }
-}
+// type ChatCompletionState = {
+//     message: string;
+//     errors?: { prompt?: string[] };
+//     data?: {
+//         text: string;
+//         audio?: string;
+//     }
+// }
 
 type DebateChallengeState = {
     message: string;
@@ -299,45 +300,65 @@ export async function getDailyQuizQuestion(
   }
 }
 
-export async function createChatCompletion(prevState: ChatCompletionState, formData: FormData): Promise<ChatCompletionState> {
-    const chatSchema = z.object({
-        prompt: z.string().min(1),
-        chatHistory: z.string(),
-    });
+type ChatCompletionState = {
+  message: string;
+  data?: { text: string; audio?: string | null };
+  errors?: Record<string, string[] | undefined>;
+};
 
-    const validatedFields = chatSchema.safeParse(Object.fromEntries(formData.entries()));
+export async function createChatCompletion(
+  prevState: ChatCompletionState,
+  formData: FormData
+): Promise<ChatCompletionState> {
+  const chatSchema = z.object({
+    prompt: z.string().min(1),
+    chatHistory: z.string().optional().default("[]"),
+  });
 
-    if (!validatedFields.success) {
-        return {
-            message: 'Invalid form data.',
-            errors: validatedFields.error.flatten().fieldErrors,
-        };
-    }
-    
-    const { prompt, chatHistory } = validatedFields.data;
-    const parsedHistory = JSON.parse(chatHistory);
+  // Convert FormData to plain object for zod
+  const entries = Object.fromEntries(formData.entries());
+  const parsed = chatSchema.safeParse(entries);
 
-    try {
-        const history = parsedHistory.map((msg: { text: string, sender: string }) => ({
-            role: msg.sender === 'user' ? 'user' : 'model',
-            content: [{ text: msg.text }],
-        }));
+  if (!parsed.success) {
+    return {
+      message: "Invalid form data.",
+      errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
 
-        const { text } = await ai.generate({
-            prompt: prompt,
-            history: history,
-        });
+  const { prompt, chatHistory } = parsed.data;
 
-        const { audio } = await generateAudioFromText(text);
+  // Validate / parse chatHistory JSON
+  let parsedHistory: Array<{ text: string; sender: string }> = [];
+  try {
+    parsedHistory = JSON.parse(chatHistory);
+  } catch (err) {
+    return {
+      message: "Invalid chat history JSON.",
+      errors: { chatHistory: ["Invalid JSON"] },
+    };
+  }
 
-        return { message: 'success', data: { text, audio } };
+  // Convert UI messages to model-friendly history shape if needed later
+  const historyForModel = parsedHistory.map((msg) => ({
+    role: msg.sender === "user" ? "user" : "model",
+    content: [{ text: msg.text }],
+  }));
 
-    } catch (error) {
-        console.error(error);
-        return { message: 'An error occurred during chat completion. Please try again.' };
-    }
+  try {
+    // Use your API helper that calls FastAPI /answer endpoint
+    const resp = await answerQuestion(prompt);
+    const text = typeof resp === "string" ? resp : (resp?.result ?? resp) as string;
+
+    // If you have TTS, replace this with a call to your generateAudioFromText()
+    const audio: string | null = null;
+
+    return { message: "success", data: { text, audio } };
+  } catch (error: any) {
+    console.error("createChatCompletion error:", error);
+    return { message: "An error occurred during chat completion. Please try again." };
+  }
 }
-
 export async function createDebateChallenge(prevState: DebateChallengeState, formData: FormData): Promise<DebateChallengeState> {
     const debateInputSchema = z.object({
         topic: z.string().describe('The topic of the debate.'),
