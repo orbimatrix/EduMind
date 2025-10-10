@@ -1,43 +1,36 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { GraduationCap, Github, Linkedin, Twitter } from 'lucide-react';
+import { GraduationCap, Github, Linkedin, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { SiDiscord } from '@icons-pack/react-simple-icons';
-import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const teammates = [
   {
     name: 'Saqib Iqbal',
-    role: 'Project Lead',
+    role: 'Full stack',
+    email: 'saqibiqbal27772@gmail.com',
     avatarUrl: 'https://picsum.photos/seed/saqib/200/200',
-    social: {
-      github: '#',
-      linkedin: '#',
-      twitter: '#',
-    },
   },
   {
     name: 'Saqin Sharif',
-    role: 'Backend Developer',
+    role: 'Gen AI & Team Lead',
+    email: 'msaqibsharif430@gmail.com',
     avatarUrl: 'https://picsum.photos/seed/saqin/200/200',
-    social: {
-      github: '#',
-      linkedin: '#',
-      twitter: '#',
-    },
   },
   {
-    name: 'Ammar',
-    role: 'Frontend Developer',
+    name: 'Mashood Farid',
+    role: 'Ui/UX Designer',
+    email: 'mashood.farid@example.com',
+    avatarUrl: 'https://picsum.photos/seed/mashood/200/200',
+  },
+  {
+    name: 'Ammar Ahmad',
+    role: 'Project documentation and debugging',
+    email: 'ammarahmad526@gmail.com',
     avatarUrl: 'https://picsum.photos/seed/ammar/200/200',
-    social: {
-      github: '#',
-      linkedin: '#',
-      twitter: '#',
-    },
   },
 ];
 
@@ -59,7 +52,7 @@ export default function TeammatesPage() {
       </header>
 
       <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-5xl">
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="font-headline text-4xl font-bold">Meet the Team</CardTitle>
@@ -68,7 +61,7 @@ export default function TeammatesPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="px-6 pb-6">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                 {teammates.map((teammate) => (
                   <Card key={teammate.name} className="flex flex-col items-center text-center p-6">
                     <Avatar className="h-24 w-24 mb-4">
@@ -78,9 +71,7 @@ export default function TeammatesPage() {
                     <h3 className="font-headline text-xl font-semibold">{teammate.name}</h3>
                     <p className="text-muted-foreground">{teammate.role}</p>
                     <div className="mt-4 flex gap-2">
-                      <Link href={teammate.social.github} className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Github /></Link>
-                      <Link href={teammate.social.linkedin} className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Linkedin /></Link>
-                      <Link href={teammate.social.twitter} className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Twitter /></Link>
+                      <a href={`mailto:${teammate.email}`} className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Mail /></a>
                     </div>
                   </Card>
                 ))}
