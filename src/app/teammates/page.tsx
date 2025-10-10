@@ -71,7 +71,7 @@ export default function TeammatesPage() {
                     <h3 className="font-headline text-xl font-semibold">{teammate.name}</h3>
                     <p className="text-muted-foreground">{teammate.role}</p>
                     <div className="mt-4 flex gap-2">
-                      <a href={`mailto:${teammate.email}`} className={buttonVariants({ variant: 'ghost', size: 'icon' })}><Mail /></a>
+                      <a href={`mailto:${teammate.email}`} className="text-sm text-primary hover:underline">{teammate.email}</a>
                     </div>
                   </Card>
                 ))}
