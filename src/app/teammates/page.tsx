@@ -23,7 +23,7 @@ const teammates = [
   {
     name: 'Mashood Farid',
     role: 'Ui/UX Designer',
-    email: 'mashood.farid@example.com',
+    email: 'mashoodfarid8@gmail.com',
     avatarUrl: 'https://picsum.photos/seed/mashood/200/200',
   },
   {

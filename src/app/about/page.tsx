@@ -38,12 +38,15 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent className="prose prose-lg max-w-none dark:prose-invert px-6 pb-6">
               <p>
-                EduMind AI was born from a simple idea: what if your textbook could talk back? In a world of passive reading and endless highlighting, we imagined a more interactive, personalized, and effective way to study. We are a team of passionate educators, engineers, and AI enthusiasts dedicated to making learning more engaging and accessible for everyone.
+
+Welcome to EduMindAI, your intelligent study companion built to make learning smarter, faster, and more engaging.
+
+EduMindAI transforms ordinary books, notes, and documents into interactive learning experiences. Powered by advanced AI, it helps students, teachers, and self-learners study more efficiently by turning reading materials into structured study plans, quizzes, and interactive Q&A sessions.                
               </p>
 
               <div className="my-8 flex justify-center">
                  <Image
-                    src="https://picsum.photos/seed/team/800/400"
+                    src="/books.png"
                     alt="Team working together"
                     width={800}
                     height={400}
@@ -52,21 +55,38 @@ export default function AboutPage() {
                 />
               </div>
 
-              <h2>Our Mission</h2>
+              <h2>With EduMindAI, you can:</h2>
                 <p>
-                  Our mission is to empower students to achieve their full academic potential by transforming static study materials into dynamic, AI-powered learning companions. We believe that by leveraging cutting-edge technology, we can create a more equitable and effective educational landscape where every student has the tools they need to succeed.
+📚 Upload your study materials — simply drag and drop your PDF or text files. EduMindAI reads and understands your content instantly.
+                </p>
+                <p>
+🗓️ Create personalized study plans — tell us your topics and available time, and the AI builds a clear day-by-day schedule for you.
+                </p>
+                <p>
+🧩 Generate quizzes — automatically create practice questions from your uploaded materials to test your understanding.
+                </p>
+                <p>
+💬 Ask questions — type any question related to your book, and EduMindAI gives you clear, accurate explanations.
+                </p>
+                <p>
+🔑 Find key topics — instantly discover the most important ideas and themes in your study materials.
                 </p>
 
-               <h2>Why EduMind AI?</h2>
+               <h2>Our Mission</h2>
                 <p>
-                    Traditional studying can be isolating and inefficient. Students spend hours reading dense texts, struggling to identify key concepts and gauge their own understanding. EduMind AI breaks this cycle by providing:
+Our mission at EduMindAI is to make learning personalized, interactive, and stress-free. Whether you’re a student preparing for exams, a teacher creating materials, or a lifelong learner exploring new subjects — EduMindAI adapts to your needs.
                 </p>
-                <ul>
+                <p>
+We believe that education should evolve with technology. By combining artificial intelligence with your own learning content, EduMindAI becomes your 24/7 study partner — always available, always ready to help you understand more in less time.
+                </p>
+               
+                {/* <ul>
                     <li><strong>Instant Clarification:</strong> Get answers to your questions in real-time, just like you would with a personal tutor.</li>
                     <li><strong>Personalized Roadmaps:</strong> Our AI generates study plans tailored to your specific needs and timeline.</li>
                     <li><strong>Active Recall Practice:</strong> Dynamically generated quizzes help you test your knowledge and retain information more effectively.</li>
                     <li><strong>Deeper Insights:</strong> We augment your learning materials with real-world examples and web research, connecting concepts to the bigger picture.</li>
-                </ul>
+                </ul> */}
+
 
                 <p>
                     Join us on our journey to make studying smarter, not harder.

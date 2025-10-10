@@ -9,19 +9,19 @@
     {
       "id": "study-plan",
       "description": "A person writing on a planner",
-      "imageUrl": "https://picsum.photos/seed/plan/400/300",
+      "imageUrl": "/p1.jpg",
       "imageHint": "writing planner"
     },
     {
       "id": "quiz",
       "description": "A multiple choice question on a paper",
-      "imageUrl": "https://picsum.photos/seed/quiz/400/300",
+      "imageUrl": "/p3.jpg",
       "imageHint": "multiple choice"
     },
     {
       "id": "topics",
       "description": "Highlighting text in a book",
-      "imageUrl": "https://picsum.photos/seed/topics/400/300",
+      "imageUrl": "/p2.png",
       "imageHint": "highlighting book"
     },
     {
