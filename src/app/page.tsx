@@ -143,6 +143,7 @@ export default function LandingPage() {
              <Link href="#features" className={buttonVariants({ variant: 'ghost' })}>Features</Link>
              <Link href="#how-it-works" className={buttonVariants({ variant: 'ghost' })}>How It Works</Link>
              <Link href="#use-cases" className={buttonVariants({ variant: 'ghost' })}>Use Cases</Link>
+             <Link href="/teammates" className={buttonVariants({ variant: 'ghost' })}>Teammates</Link>
           </nav>
           <div className="hidden items-center gap-2 md:flex">
             <Button variant="outline" asChild>
@@ -170,6 +171,7 @@ export default function LandingPage() {
                         <Link href="#features" onClick={() => setMenuOpen(false)} className="py-2">Features</Link>
                         <Link href="#how-it-works" onClick={() => setMenuOpen(false)} className="py-2">How It Works</Link>
                         <Link href="#use-cases" onClick={() => setMenuOpen(false)} className="py-2">Use Cases</Link>
+                        <Link href="/teammates" onClick={() => setMenuOpen(false)} className="py-2">Teammates</Link>
                     </nav>
                     <Separator className="my-6" />
                     <div className="flex flex-col gap-4">
@@ -420,6 +422,7 @@ export default function LandingPage() {
               <h3 className="font-semibold text-foreground">Company</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About Us</Link></li>
+                <li><Link href="/teammates" className="text-sm text-muted-foreground hover:text-foreground">Teammates</Link></li>
                 <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</Link></li>
                 <li><Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground">Docs</Link></li>
               </ul>

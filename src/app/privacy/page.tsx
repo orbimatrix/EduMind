@@ -107,6 +107,7 @@ export default function PrivacyPage() {
               <h3 className="font-semibold text-foreground">Company</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About Us</Link></li>
+                <li><Link href="/teammates" className="text-sm text-muted-foreground hover:text-foreground">Teammates</Link></li>
                 <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</Link></li>
                 <li><Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground">Docs</Link></li>
               </ul>
